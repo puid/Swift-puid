@@ -1,0 +1,3 @@
+[submodule "Tests/data"]
+	path = Tests/data
+	url = git@github.com:puid/data.git
