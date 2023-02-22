@@ -7,6 +7,15 @@
   <a href="https://codecov.io/github/puid/Swift" >
     <img src="https://codecov.io/github/puid/Swift/branch/main/graph/badge.svg"/>
   </a>
+  <a href="https://swiftpackageindex.com/puid/Swift" >
+    <img src="https://img.shields.io/badge/SPM-compatible-orange?style=flat"/>
+  </a>
+  <a href="https://swiftpackageindex.com/puid/Swift" >
+    <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fpuid%2FSwift%2Fbadge%3Ftype%3Dswift-versions"/>
+  </a>
+  <a href="https://swiftpackageindex.com/puid/Swift" >
+    <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fpuid%2FSwift%2Fbadge%3Ftype%3Dplatforms"/>
+  </a>
   <a href="https://github.com/puid/Swift/blob/main/LICENSE" >
     <img src="https://img.shields.io/badge/license-MIT-orange?style=flat"/>
   </a>
