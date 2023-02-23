@@ -7,6 +7,11 @@
   <a href="https://codecov.io/github/puid/Swift" >
     <img src="https://codecov.io/github/puid/Swift/branch/main/graph/badge.svg"/>
   </a>
+  <a href="https://github.com/puid/Swift/blob/main/LICENSE" >
+    <img src="https://img.shields.io/badge/license-MIT-orange?style=flat"/>
+  </a>
+
+  <br/>
   <a href="https://swiftpackageindex.com/puid/Swift" >
     <img src="https://img.shields.io/badge/SPM-compatible-orange?style=flat"/>
   </a>
@@ -16,9 +21,6 @@
   <a href="https://swiftpackageindex.com/puid/Swift" >
     <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fpuid%2FSwift%2Fbadge%3Ftype%3Dplatforms"/>
   </a>
-  <a href="https://github.com/puid/Swift/blob/main/LICENSE" >
-    <img src="https://img.shields.io/badge/license-MIT-orange?style=flat"/>
-  </a>
 </div>
 
 Simple, fast, flexible and efficient generation of probably unique identifiers (`puid`, aka random strings) of intuitively specified entropy using pre-defined or custom characters.
@@ -26,7 +28,7 @@ Simple, fast, flexible and efficient generation of probably unique identifiers (
 ```swift
 import Puid
 
-let alphaId = Puid(total: 1e5, risk: 1e12, charSet: .alpha)
+let alphaId = try Puid(total: 1e5, risk: 1e12, chars: .alpha)
 try alphaId.generate()
 // => "uTJtdTPQFk"
 ```
@@ -55,7 +57,7 @@ Creating a random ID generator using `Puid` is a simple as:
 ```swift
 import Puid
 
-let sessionId = Puid()
+let sessionId = try Puid()
 try sessionId.generate()
 // => "1Uyt1bj-cAgsHRpWjyPya6"
 ```
