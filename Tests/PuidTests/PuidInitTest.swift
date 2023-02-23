@@ -38,7 +38,12 @@ final class PuidInitTest: XCTestCase {
            chars: Puid.Chars.safe64,
            ere: 0.75,
            length: 22)
+#if os(macOS)
     XCTAssertEqual(puid.settings.entropy.method(), "SecRandomCopyBytes")
+#elseif os(Linux)
+    XCTAssertEqual(puid.settings.entropy.method(), "UInt8.random")
+#endif
+
     XCTAssertNotNil(puid.description)
   }
   
@@ -261,7 +266,7 @@ final class PuidInitTest: XCTestCase {
     
     let status: Int32 = 1
     let coverage = PuidError.bytesFailure(status: status)
-    XCTAssertEqual(coverage.description, "Failed to generate bytes with OSStatus: \(status)")
+    XCTAssertEqual(coverage.description, "Failed to generate bytes with status: \(status)")
 
     do {
       let tfId = try Puid(chars: .custom("TF"))

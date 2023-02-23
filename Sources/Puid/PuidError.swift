@@ -9,7 +9,7 @@ import Foundation
 /// Error type thrown by **PUID** package functions
 enum PuidError: Error {
   case bytesExhausted
-  case bytesFailure(status: OSStatus)
+  case bytesFailure(status: EntropyStatus)
   case charsNotUnique
   case invalidChar
   case invalidEncoder
@@ -20,7 +20,7 @@ enum PuidError: Error {
   public var description: String {
     switch self {
       case .bytesFailure(let status):
-        return "Failed to generate bytes with OSStatus: \(status)"
+        return "Failed to generate bytes with status: \(status)"
       case .bytesExhausted:
         return "Bytes are exhuasted"
       case .charsNotUnique:
