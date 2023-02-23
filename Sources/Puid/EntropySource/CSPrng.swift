@@ -25,7 +25,7 @@ extension Puid.Entropy.System {
     ///
     /// - Throws: `PuidError.bytesFailure(status:)` if system entropy is not available
     func bytes(into data: inout Data, count: Int, offset: Int) throws {
-#if os(macOS)
+#if canImport(Darwin)
       let status = data.withUnsafeMutableBytes {
         SecRandomCopyBytes(kSecRandomDefault, count, $0.baseAddress! + offset)
       }
@@ -40,7 +40,7 @@ extension Puid.Entropy.System {
     }
     
     func method() -> String {
-#if os(macOS)
+#if canImport(Darwin)
       "SecRandomCopyBytes"
 #elseif os(Linux)
       "UInt8.random"

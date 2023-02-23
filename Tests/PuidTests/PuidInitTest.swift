@@ -38,7 +38,7 @@ final class PuidInitTest: XCTestCase {
            chars: Puid.Chars.safe64,
            ere: 0.75,
            length: 22)
-#if os(macOS)
+#if canImport(Darwin)
     XCTAssertEqual(puid.settings.entropy.method(), "SecRandomCopyBytes")
 #elseif os(Linux)
     XCTAssertEqual(puid.settings.entropy.method(), "UInt8.random")

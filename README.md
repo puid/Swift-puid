@@ -44,7 +44,7 @@ try alphaId.generate()
 
 ## <a name="Overview"></a>Overview
 
-A general overview of [PUID](https://github.com/puid/.github/blob/2381099d7f92bda47c35e8b5ae1085119f2a919c/profile/README.md) provides information relevant to all **PUID** implementations.
+`Puid` provides full, explicit control over all important facets of random ID generation: **entropy source**, **characters**, and desired **randomness**. A [general overview](https://github.com/puid/.github/blob/2381099d7f92bda47c35e8b5ae1085119f2a919c/profile/README.md) details information relevant to all **PUID** implementations.
 
 [TOC](#TOC)
 
@@ -60,11 +60,13 @@ try sessionId.generate()
 // => "1Uyt1bj-cAgsHRpWjyPya6"
 ```
 
-Options allow easy and complete control of all important facets of ID generation: **entropy source**, **characters**, and desired **randomness**. Using the default parameters, as in the above example, `Puid` generates IDs suitable for use as web session IDs. The defaults are:
+Options allow easy and complete control of **entropy source**, **characters**, and desired **randomness**. The above example uses the default for each:
 
-- entropy source: Cryptographically strong random bytes (`Puid.Entropy.Source.csprng`)
-- characters: [File system & URL safe](https://tools.ietf.org/html/rfc4648#section-5) characters (`Puid.Chars.safe64`)
-- randomness: **128** bits of entropy
+- **entropy source**: Cryptographically strong random bytes
+- **characters**: [File system & URL safe](https://tools.ietf.org/html/rfc4648#section-5) characters
+- **randomness**: 128 bits of entropy 
+
+These defaults are suitable for web session IDs.
 
 [TOC](#TOC)
 
@@ -119,9 +121,9 @@ try randId.generate()
 // => "dqHqFD79QGd2TNP"
 ```
 
-In the above example, a `total` of **100,000** IDs can be generated with a 1 in a trillion `risk` of repeat. Remember, _**all**_ random ID generation has an inherent _**risk of repeat**_. Rather than blindly use one-size-fits-all (e.g. UUID, which may be better described as an inefficient, one-size-fits-none solution), `Puid` allows full control so that risk can be _explicitly_ declared as appropriate for specific application need.
+In the above example, a `total` of **100,000** IDs can be generated with a 1 in a trillion `risk` of repeat. Remember, _**all**_ random ID generation has an inherent _**risk of repeat**_. There is simply no such thing as a _univerally unique_ ID, regardless of the UUID moniker. Rather than blindly use one-size-fits-all (which, for UUID, may be better described as an inefficient, one-size-fits-none solution), `Puid` allows full control so that risk can be _explicitly_ declared as appropriate for specific application need.
 
-For those instances where explicit `bits` of entropy is known:
+For those instances where `bits` of entropy is explicitly desired:
 
 ```swift
 let token = try Puid(bits: 256, chars: .hexUpper)
