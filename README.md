@@ -43,6 +43,7 @@ try alphaId.generate()
 - [Installation](#Installation)
 - [Module API](#ModuleAPI)
 - [Chars](#Chars)
+- [License](#License)
 
 ## <a name="Overview"></a>Overview
 
@@ -140,3 +141,7 @@ try token.generate()
 Swift Package Manager URL: https://github.com/puid/Swift
 
 [TOC](#TOC)
+
+## License
+
+MIT license. See [LICENSE](LICENSE.txt).

@@ -17,8 +17,8 @@ let package = Package(
     .testTarget(
       name: "PuidTests",
       dependencies: ["Puid"]),
-//    .testTarget(
-//      name: "DataTests",
-//      dependencies: ["Puid"]),
+    .testTarget(
+      name: "DataTests",
+      dependencies: ["Puid"]),
   ]
 )
