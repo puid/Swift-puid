@@ -13,17 +13,22 @@ extension Puid {
     let settings: Settings
     
     var puidData: Data
-    var bitCount: Int
     var bitOffset: Int
-    var nBitsPerChar: Int
+    var ndxShift: [Int]
+
+    let bitCount: Int
+    let nBitsPerChar: Int
+    let nChars: Int
     
     let puidUsesExactlyNBytes: Bool
     let charsCountIsPow2: Bool
     
     init(settings: Settings) {
       self.settings = settings
+
+      nChars = settings.chars.count
       
-      charsCountIsPow2 = Util.isPow2(settings.chars.count)
+      charsCountIsPow2 = Util.isPow2(nChars)
       puidUsesExactlyNBytes = charsCountIsPow2 && (settings.nBytesPerPuid % 8 == 0)
       
       if puidUsesExactlyNBytes {
@@ -35,6 +40,11 @@ extension Puid {
       bitCount = 8 * puidData.count
       bitOffset = bitCount
       nBitsPerChar = Int(ceil(settings.bitsPerChar))
+      
+      let ndxCount = settings.bitShifts.last!.value
+      ndxShift = (0...ndxCount).map { ndx in
+        settings.bitShifts.first(where: { ndx <= $0.value })!.shift
+      }
     }
     
     func puidNdxs() throws -> PuidNdxs {
@@ -53,18 +63,18 @@ extension Puid {
       
       let ndx = sliceBits()
       
-      if ndx < settings.chars.count {
+      if ndx < nChars {
         bitOffset += nBitsPerChar
         return ndx
       }
       
-      bitOffset += settings.bitShifts.first(where: { ndx <= $0.value })!.shift
+      bitOffset += ndxShift[Int(ndx)]
       
       return try parseNdx()
     }
-    
+  
     private func sliceBits() -> PuidNdx {
-      let lByteNdx = bitOffset / 8
+      let lByteNdx = bitOffset >> 3
       let lByte = puidData[lByteNdx]
       let lBitNum = bitOffset % 8
       
