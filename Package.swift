@@ -4,6 +4,9 @@ import PackageDescription
 
 let package = Package(
   name: "Puid",
+  platforms: [
+    .macOS(.v10_14)
+  ],
   products: [
     .library(
       name: "Puid",

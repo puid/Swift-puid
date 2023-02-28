@@ -138,7 +138,7 @@ try token.generate()
 
 ### <a name="Installation"></a>Installation
 
-Swift Package Manager URL: https://github.com/puid/Swift
+Swift Package Manager URL: https://github.com/puid/Swift-puid
 
 [TOC](#TOC)
 

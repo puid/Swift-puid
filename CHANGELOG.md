@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.3 (2023-03-01)
+
+### Optimizations
+
 ## v1.0.2 (2023-02-23)
 
 ### Restore iOS, tvOS and watchOS compatibility
