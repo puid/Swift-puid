@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.4 (2023-03-02)
+
+### Github workflow for data tests
+
 ## v1.0.3 (2023-03-01)
 
 ### Optimizations
