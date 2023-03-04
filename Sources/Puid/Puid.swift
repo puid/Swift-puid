@@ -57,7 +57,7 @@ public struct Puid {
   ///
   /// - Parameter bits: Entropy `bits` for generated IDs
   /// - Parameter chars: `Puid.Chars`
-  /// - Parameter entropy: `Puid.Entropy.Source`
+  /// - Parameter entropy: `Puid.Entropy.System`
   ///
   /// - Throws: `PuidError` if `chars` String is not valid for **PUID** use
   ///
@@ -83,10 +83,10 @@ public struct Puid {
   ///
   public init(bits: Double = Puid.Default.bits,
               chars: Puid.Chars = Puid.Default.chars,
-              entropy puidSource: Puid.Entropy.Source) throws {
+              entropy source: Puid.Entropy.System) throws {
     try self.init(bits: bits,
                   chars: chars,
-                  entropy: Puid.Entropy.source(puidSource))
+                  entropy: Puid.Entropy.system(source))
   }
   
   /// Create a **PUID** generator using `total/risk`
@@ -129,7 +129,7 @@ public struct Puid {
   /// - Parameter total: The `total` number of **puid**s that can be generated at the specified `risk`
   /// - Parameter risk: The `risk` of a duplicate **puid** when `total` IDs have been generated
   /// - Parameter chars: `Puid.Chars`
-  /// - Parameter entropy: `Puid.Entropy.Source`
+  /// - Parameter entropy: `Puid.Entropy.System`
   ///
   /// - Throws: `PuidError` if `chars` String is not valid for **PUID** use
   ///
@@ -153,11 +153,11 @@ public struct Puid {
   public init(total: Double,
               risk: Double,
               chars: Puid.Chars = Puid.Default.chars,
-              entropy puidSource: Puid.Entropy.Source) throws {
+              entropy source: Puid.Entropy.System) throws {
     try self.init(total: total,
                   risk: risk,
                   chars: chars,
-                  entropy: Puid.Entropy.source(puidSource))
+                  entropy: Puid.Entropy.system(source))
   }
   
   /// Generate a **puid**
@@ -192,6 +192,6 @@ extension Puid {
     public static let chars = Puid.Chars.safe64
     
     /// Entropy source using system crytographically strong bytes
-    public static let entropy = Puid.Entropy.source(.csprng)
+    public static let entropy = Puid.Entropy.system(.csprng)
   }
 }

@@ -75,7 +75,7 @@ These defaults are suitable for web session IDs.
 
 ### <a name="EntropySource"></a>Entropy Source
 
-`Puid` provides a CSPRNG entropy source (`Puid.Entropy.Source.csprng`, using `SecCopyRandomBytes`) and a PRNG entropy source (`Puid.Entropy.Source.prng`, using `UInt8.random`) via the `entropy` option:
+`Puid` provides a CSPRNG entropy source (`Puid.Entropy.System.csprng`, using `SecCopyRandomBytes`) and a PRNG entropy source (`Puid.Entropy.System.prng`, using `UInt8.random`) via the `entropy` option:
 
 ```swift
 let prngId = try Puid(entropy: .prng)

@@ -3,7 +3,6 @@
 //  
 //  MIT License: See project LICENSE.txt
 //
-
 import Foundation
 
 extension Puid.Entropy {

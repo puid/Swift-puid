@@ -1,9 +1,8 @@
 //
-//  Puid.EntropySystem.CSPrng
+//  Puid.Entropy.System.CSPrng
 //
 //  MIT License: See project LICENSE.txt
 //
-
 import Foundation
 
 #if canImport(Darwin)
@@ -13,7 +12,6 @@ typealias EntropyStatus = OSStatus
 import Glibc
 typealias EntropyStatus = Int32
 #endif
-
 
 extension Puid.Entropy.System {
   struct CSPrng: PuidEntropySource {
