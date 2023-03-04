@@ -12,10 +12,6 @@ let package = Package(
       name: "Puid",
       targets: ["Puid"]),
   ],
-  dependencies: [
-    .package(url: "https://github.com/pointfreeco/swift-gen.git",
-             from: "0.4.0")
-  ],
   targets: [
     .target(
       name: "Puid",
@@ -23,12 +19,6 @@ let package = Package(
     .testTarget(
       name: "PuidTests",
       dependencies: ["Puid"]),
-    .testTarget(
-      name: "CompareTests",
-      dependencies: [
-        "Puid",
-        .product(name: "Gen", package: "swift-gen"),
-      ]),
     .testTarget(
       name: "DataTests",
       dependencies: ["Puid"]),

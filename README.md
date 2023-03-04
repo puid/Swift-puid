@@ -1,5 +1,15 @@
 # Puid
 
+Simple, fast, flexible and efficient generation of probably unique identifiers (`puid`, aka random strings) of intuitively specified entropy using pre-defined or custom characters.
+
+```swift
+import Puid
+
+let alphaId = try Puid(total: 1e5, risk: 1e12, chars: .alpha)
+try alphaId.generate()
+// => "uTJtdTPQFk"
+```
+
 <div align="leading">
   <a href="https://github.com/puid/Swift/actions/workflows/test.yml">
     <img src="https://github.com/puid/Swift/actions/workflows/test.yml/badge.svg" />
@@ -7,10 +17,6 @@
   <a href="https://codecov.io/gh/puid/Swift-puid" >
     <img src="https://codecov.io/gh/puid/Swift-puid/branch/main/graph/badge.svg?token=JA5WRNFQDE"/>
   </a>
-  <a href="https://github.com/puid/Swift/blob/main/LICENSE" >
-    <img src="https://img.shields.io/badge/license-MIT-orange?style=flat"/>
-  </a>
-
   <br/>
   <a href="https://swiftpackageindex.com/puid/Swift-puid" >
     <img src="https://img.shields.io/badge/SPM-compatible-orange?style=flat"/>
@@ -21,17 +27,11 @@
   <a href="https://swiftpackageindex.com/puid/Swift-puid" >
     <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fpuid%2FSwift-puid%2Fbadge%3Ftype%3Dplatforms"/>
   </a>
+  <br/>  
+  <a href="https://github.com/puid/Swift/blob/main/LICENSE" >
+    <img src="https://img.shields.io/badge/license-MIT-orange?style=flat"/>
+  </a>
 </div>
-
-Simple, fast, flexible and efficient generation of probably unique identifiers (`puid`, aka random strings) of intuitively specified entropy using pre-defined or custom characters.
-
-```swift
-import Puid
-
-let alphaId = try Puid(total: 1e5, risk: 1e12, chars: .alpha)
-try alphaId.generate()
-// => "uTJtdTPQFk"
-```
 
 ## <a name="TOC"></a>TOC
 
@@ -47,7 +47,7 @@ try alphaId.generate()
 
 ## <a name="Overview"></a>Overview
 
-`Puid` provides full, explicit control over all important facets of random ID generation: **entropy source**, **characters**, and desired **randomness**. A [general overview](https://github.com/puid/.github/blob/2381099d7f92bda47c35e8b5ae1085119f2a919c/profile/README.md) details information relevant to all **PUID** implementations.
+`Puid` provides full, explicit control over all important facets of random ID generation: **_entropy source_**, **_characters_**, and desired **_randomness_**. A [general overview](https://github.com/puid/.github/blob/2381099d7f92bda47c35e8b5ae1085119f2a919c/profile/README.md) details information relevant to all **PUID** implementations.
 
 [TOC](#TOC)
 
@@ -63,7 +63,7 @@ try sessionId.generate()
 // => "1Uyt1bj-cAgsHRpWjyPya6"
 ```
 
-Options allow easy and complete control of **entropy source**, **characters**, and desired **randomness**. The above example uses the default for each:
+Options allow easy and complete control over random ID generation. The above example uses the default for each of:
 
 - **entropy source**: Cryptographically strong random bytes
 - **characters**: [File system & URL safe](https://tools.ietf.org/html/rfc4648#section-5) characters
@@ -110,13 +110,13 @@ try customId.generate()
 // => "oRmcAACtHsuAIuDSsooItACHIICo_S_IHo"
 ```
 
-Note: `Puid` validates custom chars are unique to maximizes the entropy captured during ID generation.
+Note: `Puid` validates that the custom `chars` are unique to maximizes the entropy captured during ID generation.
 
 [TOC](#TOC)
 
 ### <a name="Randomness"></a>Randomness
 
-A critical aspect of random ID generation is, of course, the randomness of the IDs generated. `Puid` provides direct specification of ID randomness via the `bits` option for situations like session IDs (which are recommended to be 128-bit) or for 256-bit security tokens. But a more general, intuitive declaration of randomness is to consider the `total` number of IDs actually needed and assign an acceptable `risk` of repeat:
+A critical aspect of random ID generation is, of course, the randomness of the IDs generated. `Puid` provides direct specification of ID randomness via the `bits` option for situations like session IDs (which are recommended to be 128-bit) or for 256-bit security tokens. But a more general, intuitive declaration of randomness is to explicitly specify the `total` number of IDs actually needed and assign an acceptable `risk` of repeat:
 
 ```swift
 let randId = try Puid(total: 1e5, risk: 1e12, chars: .safe32)
@@ -124,9 +124,9 @@ try randId.generate()
 // => "dqHqFD79QGd2TNP"
 ```
 
-In the above example, a `total` of **100,000** IDs can be generated with a 1 in a trillion `risk` of repeat. Remember, _**all**_ random ID generation has an inherent _**risk of repeat**_. There is simply no such thing as a _univerally unique_ ID, regardless of the UUID moniker. Rather than blindly use one-size-fits-all (which, for UUID, may be better described as an inefficient, one-size-fits-none solution), `Puid` allows full control so that risk can be _explicitly_ declared as appropriate for specific application need.
+In the above example, a `total` of **100,000** IDs can be generated with a 1 in a trillion `risk` of repeat. Remember, **_all_** random ID generation has an **_inherent risk of repeat_**. There is simply no such thing as a _univerally unique_ ID, regardless of the UUID moniker. Rather than blindly use one-size-fits-all (which, for UUID, may be better described as an inefficient, one-size-fits-none solution), `Puid` allows full control so that risk can be _explicitly_ declared as appropriate for specific application need.
 
-For those instances where `bits` of entropy is explicitly desired:
+For those instances where `bits` of entropy is explicitly known:
 
 ```swift
 let token = try Puid(bits: 256, chars: .hexUpper)
