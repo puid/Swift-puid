@@ -13,6 +13,7 @@ public protocol PuidEntropySource {
   /// - Parameter count: The number of bytes to generate
   /// - Parameter offset: Offset byte at which to begin copy
   ///
+  /// - Throws: `PuidError.dataSize` if `Data` capacity is insufficient
   func bytes(into: inout Data, count: Int, offset: Int) throws
   
   /// Description of the method used to generate entropy bytes

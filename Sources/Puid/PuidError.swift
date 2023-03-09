@@ -11,6 +11,7 @@ enum PuidError: Error {
   case bytesExhausted
   case bytesFailure(status: EntropyStatus)
   case charsNotUnique
+  case dataSize
   case invalidChar
   case invalidEncoder
   case invalidEncoding(puidNdx: PuidNdx)
@@ -25,6 +26,8 @@ enum PuidError: Error {
         return "Bytes are exhuasted"
       case .charsNotUnique:
         return "Characters not unique"
+      case .dataSize:
+        return "Data not sufficient to accept count bytes starting at offset"
       case .invalidChar:
         return "Invalid character"
       case .invalidEncoder:

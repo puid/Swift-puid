@@ -15,8 +15,9 @@ extension Puid.Entropy.System {
     /// - Parameter count: The number of bytes to generate
     /// - Parameter offset: Offset byte at which to begin copy
     ///
-    /// - Throws: This function is marked `throws` by the protocol but will not actually throw any errors
+    /// - Throws: `PuidError.dataSize` if Data size is insufficient to accept count bytes starting at offset
     func bytes(into data: inout Data, count: Int, offset: Int) throws {
+      guard count + offset < data.count + 1 else { throw PuidError.dataSize }
       (offset..<(offset+count)).forEach { ndx in
         data[ndx] = UInt8.random(in: UInt8.min ... UInt8.max)
       }

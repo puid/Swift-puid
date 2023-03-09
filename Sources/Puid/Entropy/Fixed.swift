@@ -43,7 +43,10 @@ extension Puid.Entropy {
     /// - Parameter offset: Offset byte at which to begin copy
     ///
     /// - Throws: `PuidError.bytesExhausted` if there are not enough bytes to fulfil the request
+    /// - Throws: `PuidError.dataSize` if Data size is insufficient to accept count bytes starting at offset
     public func bytes(into data: inout Data, count: Int, offset: Int) throws {
+      guard count + offset < data.count + 1 else { throw PuidError.dataSize }
+      
       let nBitsNeeded = count << 3
       
       guard bitOffset + nBitsNeeded <= bitCount else {

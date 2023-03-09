@@ -22,7 +22,10 @@ extension Puid.Entropy.System {
     /// - Parameter offset: Offset byte at which to begin copy
     ///
     /// - Throws: `PuidError.bytesFailure(status:)` if system entropy is not available
+    /// - Throws: `PuidError.dataSize` if Data size is insufficient to accept count bytes starting at offset
     func bytes(into data: inout Data, count: Int, offset: Int) throws {
+      guard count + offset < data.count + 1 else { throw PuidError.dataSize }
+      
 #if canImport(Darwin)
       let status = data.withUnsafeMutableBytes {
         SecRandomCopyBytes(kSecRandomDefault, count, $0.baseAddress! + offset)
