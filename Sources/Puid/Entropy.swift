@@ -26,8 +26,10 @@ extension Puid {
         case .csprng:
           return Puid.Entropy.System.CSPrng()
         case .prng:
-          return Puid.Entropy.System.Prng()
+          return Puid.Entropy.Source(using: Puid.Entropy.System.Prng.Generator(),
+                                        method: Puid.Entropy.System.Prng.Generator.method)
       }
     }
+    
   }
 }

@@ -125,14 +125,14 @@ final class PuidInitTest: XCTestCase {
   }
   
   func testPrng() throws {
-    let defaultPrngId = try Puid(entropy: .prng)
-    assert(defaultPrngId,
+    let prngId = try Puid(entropy: .prng)
+    assert(prngId,
            bits: 132.0,
            bitsPerChar: 6.0,
            chars: Puid.Chars.safe64,
            ere: 0.75,
            length: 22)
-    XCTAssertEqual(defaultPrngId.settings.entropy.method(), "UInt8.random")
+    XCTAssertEqual(prngId.settings.entropy.method(), "UInt64.random")
     
     let totalRiskPrngId = try Puid(total: 1e7, risk: 1e12, chars: Puid.Chars.hex, entropy: .csprng)
     assert(totalRiskPrngId,

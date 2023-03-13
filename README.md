@@ -75,7 +75,7 @@ These defaults are suitable for web session IDs.
 
 ### <a name="EntropySource"></a>Entropy Source
 
-`Puid` provides a CSPRNG entropy source (`Puid.Entropy.System.csprng`, using `SecCopyRandomBytes`) and a PRNG entropy source (`Puid.Entropy.System.prng`, using `UInt8.random`) via the `entropy` option:
+`Puid` provides a CSPRNG entropy source (`Puid.Entropy.System.csprng`, using `SecCopyRandomBytes`) and a PRNG entropy source (`Puid.Entropy.System.prng`, using `UInt64.random`) via the `entropy` option:
 
 ```swift
 let prngId = try Puid(entropy: .prng)
@@ -93,6 +93,16 @@ try fixedId.generate()
 ```
 
 Note: The `Puid.Entropy.Fixed` source is convenient for deterministic testing but not suitable for general use.
+
+A convenience class, `Puid.Entropy.Source`, provides a means of using any `RandomNumberGenerator` implementation as a `PuidEntropySource`. If, for example, you had a favorite PRNG, say `FavePrng`, that generates a repeatable sequence of random UInt64 numbers via an initialization seed, you could use that PRNG as an entropy source:
+
+```swift
+let favePrng = Puid.Entropy.Source(using: FavePrng(seed: 42))
+let prngId = try Puid(entropy: favePrng)
+try prngId.generate()
+// => A puid generated using bytes from the custom FavePrng entropy source
+```
+
 
 [TOC](#TOC)
 

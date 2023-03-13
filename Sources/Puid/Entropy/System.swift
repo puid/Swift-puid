@@ -12,3 +12,4 @@ extension Puid.Entropy {
     case prng
   }
 }
+
