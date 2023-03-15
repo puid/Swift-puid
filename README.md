@@ -41,8 +41,7 @@ try alphaId.generate()
   - [Characters](#Characters)
   - [Randomness](#Randomness)
 - [Installation](#Installation)
-- [Module API](#ModuleAPI)
-- [Chars](#Chars)
+- [Predefined Characters](#Chars)
 - [License](#License)
 
 ## <a name="Overview"></a>Overview
@@ -149,6 +148,34 @@ try token.generate()
 ### <a name="Installation"></a>Installation
 
 Swift Package Manager URL: https://github.com/puid/Swift-puid
+
+[TOC](#TOC)
+
+### <a name="Chars"></a>Predefined Characters
+
+The `Puid.Chars` **enum** defines 17 character sets:
+
+| Name                | Characters                                                                                    |
+| :------------------ | :-------------------------------------------------------------------------------------------- |
+| .alpha              | ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz                                          |
+| .alphaLower         | abcdefghijklmnopqrstuvwxyz                                                                    |
+| .alphaUpper         | ABCDEFGHIJKLMNOPQRSTUVWXYZ                                                                    |
+| .alphaNum           | ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789                                |
+| .alphaNumLower      | abcdefghijklmnopqrstuvwxyz0123456789                                                          |
+| .alphaNumUpper      | ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789                                                          |
+| .base32             | ABCDEFGHIJKLMNOPQRSTUVWXYZ234567                                                              |
+| .base32Hex          | 0123456789abcdefghijklmnopqrstuv                                                              |
+| .base32HexUpper     | 0123456789ABCDEFGHIJKLMNOPQRSTUV                                                              |
+| .crockford32        | 0123456789ABCDEFGHJKMNPQRSTVWXYZ                                                              |
+| .decimal            | 0123456789                                                                                    |
+| .hex                | 0123456789abcdef                                                                              |
+| .hexUpper           | 0123456789ABCDEF                                                                              |
+| .safeSscii          | !#$%&()\*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^\_abcdefghijklmnopqrstuvwxyz{\|}~ |
+| .safe32             | 2346789bdfghjmnpqrtBDFGHJLMNPQRT                                                              |
+| .safe64             | ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-\_                             |
+| .symbol             | !#$%&()\*+,-./:;<=>?@[]^\_{\|}~                                                               |
+
+`Puid.Chars.custom(String)` provides a mechanism to use any **String** of up to 256 unique characters.
 
 [TOC](#TOC)
 

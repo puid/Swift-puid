@@ -224,12 +224,6 @@ extension Puid.Chars: Equatable {
   }
 }
 
-//extension Puid.Chars: CustomStringConvertible {
-//  public var description: String {
-//    
-//  }
-//}
-
 extension Puid.Chars: CaseIterable {
   public static var allCases: [Puid.Chars] = [
     .alpha,

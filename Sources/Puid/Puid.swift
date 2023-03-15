@@ -168,10 +168,38 @@ public struct Puid {
   }
 }
 
+public extension Puid {
+  /// Bits of entropy for generated IDs
+  var bits: Double {
+    settings.bits
+  }
+
+  /// Bits of entropy per character used in IDs
+  var bitsPerChar: Double {
+    settings.bitsPerChar
+  }
+
+  /// Characters used in IDs
+  var chars: String {
+    settings.chars.string
+  }
+
+  /// Entropy Representation Efficiency
+  ///
+  /// The ratio of random ID entropy to the number of bits required to represent the string.
+  var ere: Double {
+    settings.ere
+  }
+  
+  var length: Int {
+    settings.length
+  }
+}
+
 extension Puid: CustomStringConvertible {
   /// A listing of the parameterization of a **PUID** generator
   public var description: String {
-    "Puid:\n\(settings)"
+    "Puid:\n  \(settings.description)"
   }
 }
 

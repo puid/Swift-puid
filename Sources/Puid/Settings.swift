@@ -33,37 +33,38 @@ extension Puid {
   }
 }
 
-/// Description
-//extension Puid.Settings: CustomStringConvertible, CustomDebugStringConvertible {
-//  func round2(_ x: Double) -> Double {
-//    round(x * 100) / 100.0
-//  }
-//  
-//  var description: String {
-//    let charsName = Puid.Chars.allCases.contains(chars) ? "\(chars)" : "custom"
-//    return
-//"""
-//  bits: \(round2(bits))
-//  bitsPerChar: \(round2(bitsPerChar))
-//  chars: \(charsName) "\(chars.string)"
-//  ere: \(round2(ere))
-//  length: \(length)
-//"""
-//  }
-//  
-//  var debugDescription: String {
-//    let descr = self.description
-//    return
-//"""
-//\(descr)
-//  bitShifts: \(bitShifts)
-//  nBytesPerPuid: \(nBytesPerPuid)
-//  entropy: \(entropy)
-//"""
-//  }
-//}
+// Description
+extension Puid.Settings: CustomStringConvertible, CustomDebugStringConvertible {
+  func round2(_ x: Double) -> Double {
+    round(x * 100) / 100.0
+  }
+  
+  var description: String {
+    let charsName = Puid.Chars.allCases.contains(chars) ? "\(chars)" : "custom"
+    return
+"""
+  bits: \(round2(bits))
+  bitsPerChar: \(round2(bitsPerChar))
+  chars: \(charsName) "\(chars.string)"
+  entropy source: "\(entropy.method())"
+  ere: \(round2(ere))
+  length: \(length)
+"""
+  }
+  
+  var debugDescription: String {
+    let descr = self.description
+    return
+"""
+\(descr)
+  bitShifts: \(bitShifts)
+  nBytesPerPuid: \(nBytesPerPuid)
+  entropy: \(entropy)
+"""
+  }
+}
 
-/// Static PuidInfo creation
+// Static PuidInfo creation
 extension Puid.Settings {
 
   typealias PuidInfo = (bits: Double, bitsPerChar: Double, nBytesPerPuid: Int, ere: Double, length: Int)
