@@ -16,6 +16,6 @@ public protocol PuidEntropySource {
   /// - Throws: `PuidError.dataSize` if `Data` capacity is insufficient
   func bytes(into: inout Data, count: Int, offset: Int) throws
   
-  /// Description of the method used to generate entropy bytes
-  func method() -> String
+  /// Description of the source of entropy bytes
+  var source: String { get }
 }

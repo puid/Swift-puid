@@ -9,7 +9,7 @@ public extension Puid.Entropy {
   class Source: PuidEntropySource {
     
     var randomNumber: RandomNumberGenerator
-    let entropyMethod: String
+    let entropySource: String
     
     var randomBytes: UInt64 = 0
     let randomByteCount = MemoryLayout<UInt64>.size
@@ -17,8 +17,8 @@ public extension Puid.Entropy {
     
     public init(using generator: RandomNumberGenerator, method: String = "Not Specified") {
       randomNumber = generator
-      entropyMethod = method
-
+      entropySource = method
+      
       randomByteOffset = randomByteCount
     }
     
@@ -34,7 +34,7 @@ public extension Puid.Entropy {
       guard count + offset <= data.count else { throw PuidError.dataSize }
       
       let remainingByteCount = randomByteCount - randomByteOffset
-
+      
       // Remaining bytes cover request
       if count < remainingByteCount {
         withUnsafeBytes(of: randomBytes) { bytesPtr in
@@ -45,10 +45,10 @@ public extension Puid.Entropy {
         randomByteOffset += count
         return
       }
-
+      
       // Track data byte index
       var dataByteNdx = 0
-
+      
       // Use remaining random bytes
       if 0 < remainingByteCount {
         withUnsafeBytes(of: randomBytes) { randomBytesPtr in
@@ -58,7 +58,7 @@ public extension Puid.Entropy {
           dataByteNdx = remainingByteCount
         }
       }
-
+      
       // Fill UInt64 sized chunks
       let chunks = (count - dataByteNdx) / randomByteCount
       if 0 < chunks {
@@ -89,8 +89,8 @@ public extension Puid.Entropy {
       randomByteOffset = dataBytesLeft
     }
     
-    public func method() -> String {
-      return entropyMethod
+    public var source: String {
+      entropySource
     }
   }
 }

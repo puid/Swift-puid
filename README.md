@@ -175,7 +175,7 @@ The `Puid.Chars` **enum** defines 17 character sets:
 | .safe64             | ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-\_                             |
 | .symbol             | !#$%&()\*+,-./:;<=>?@[]^\_{\|}~                                                               |
 
-`Puid.Chars.custom(String)` provides a mechanism to use any **String** of up to 256 unique characters.
+`Puid.Chars.custom(String)` provides a mechanism to use any **String** of up to 256 unique characters for ID generation.
 
 [TOC](#TOC)
 

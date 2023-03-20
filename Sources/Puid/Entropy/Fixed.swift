@@ -66,8 +66,8 @@ extension Puid.Entropy {
       bitOffset = 0
     }
     
-    public func method() -> String {
-      return "Fixed Bytes"
+    public var source: String {
+      "Fixed Bytes"
     }
   }
 }

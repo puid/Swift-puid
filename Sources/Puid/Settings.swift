@@ -45,8 +45,9 @@ extension Puid.Settings: CustomStringConvertible, CustomDebugStringConvertible {
 """
   bits: \(round2(bits))
   bitsPerChar: \(round2(bitsPerChar))
-  chars: \(charsName) "\(chars.string)"
-  entropy source: "\(entropy.method())"
+  chars: \(chars.string)
+  chars name: \(charsName)
+  entropy: \(entropy.source)
   ere: \(round2(ere))
   length: \(length)
 """
@@ -59,7 +60,6 @@ extension Puid.Settings: CustomStringConvertible, CustomDebugStringConvertible {
 \(descr)
   bitShifts: \(bitShifts)
   nBytesPerPuid: \(nBytesPerPuid)
-  entropy: \(entropy)
 """
   }
 }

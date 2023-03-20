@@ -1,6 +1,20 @@
 # Changelog
 
+## 1.1.0 (2023-03-20)
+
+### `RandomNumberGenerator` entropy source
+- Enable use of any Swift `RandomNumberGenerator` to be used as a `PuidEntropySource`
+
+### `PuidEntropySource` protocol
+- Replace **func method(): String** with **var source: String**
+
+### `Puid` properties
+- Expose individual **puid** generation properties to public access
+
+### Cleanup
+
 ## 1.0.4 (2023-03-02)
+
 ### Data based tests
 - Adjust Github workflow for data tests via submodule
 

@@ -191,6 +191,11 @@ public extension Puid {
     settings.ere
   }
   
+  /// Entropy Source
+  var source: String {
+    settings.entropy.source
+  }
+  
   var length: Int {
     settings.length
   }
@@ -199,7 +204,7 @@ public extension Puid {
 extension Puid: CustomStringConvertible {
   /// A listing of the parameterization of a **PUID** generator
   public var description: String {
-    "Puid:\n  \(settings.description)"
+    "Puid:\n\(settings.description)"
   }
 }
 

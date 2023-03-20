@@ -40,7 +40,7 @@ extension Puid.Entropy.System {
 #endif
     }
     
-    func method() -> String {
+    var source: String {
 #if canImport(Darwin)
       "SecRandomCopyBytes"
 #elseif os(Linux)

@@ -39,9 +39,9 @@ final class PuidInitTest: XCTestCase {
            ere: 0.75,
            length: 22)
 #if canImport(Darwin)
-    XCTAssertEqual(puid.settings.entropy.method(), "SecRandomCopyBytes")
+    XCTAssertEqual(puid.settings.entropy.source, "SecRandomCopyBytes")
 #elseif os(Linux)
-    XCTAssertEqual(puid.settings.entropy.method(), "UInt8.random")
+    XCTAssertEqual(puid.settings.entropy.source, "UInt8.random")
 #endif
 
     XCTAssertNotNil(puid.description)
@@ -132,7 +132,7 @@ final class PuidInitTest: XCTestCase {
            chars: Puid.Chars.safe64,
            ere: 0.75,
            length: 22)
-    XCTAssertEqual(prngId.settings.entropy.method(), "UInt64.random")
+    XCTAssertEqual(prngId.settings.entropy.source, "UInt64.random")
     
     let totalRiskPrngId = try Puid(total: 1e7, risk: 1e12, chars: Puid.Chars.hex, entropy: .csprng)
     assert(totalRiskPrngId,
@@ -153,7 +153,7 @@ final class PuidInitTest: XCTestCase {
            chars: Puid.Chars.safe64,
            ere: 0.75,
            length: 22)
-    XCTAssertEqual(defaultFixedId.settings.entropy.method(), "Fixed Bytes")
+    XCTAssertEqual(defaultFixedId.settings.entropy.source, "Fixed Bytes")
   }
   
   func testTotalRiskFixed() throws {
