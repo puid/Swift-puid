@@ -45,6 +45,7 @@ final class PuidInitTest: XCTestCase {
 #endif
 
     XCTAssertNotNil(puid.description)
+    XCTAssertNotNil(puid.settings.debugDescription)
   }
   
   func testBitsDefault() throws {

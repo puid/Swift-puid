@@ -335,6 +335,17 @@ final class PuidTests: XCTestCase {
     XCTAssertEqual(try id.generate(), "ėS䷁a䷯")
   }
   
+  func testPuidProperties() throws {
+    let puid = try Puid(bits: 96, chars: .alphaNumUpper)
+    
+    XCTAssertEqual(round2(puid.bits), 98.23)
+    XCTAssertEqual(round2(puid.bitsPerChar), 5.17)
+    XCTAssertEqual(puid.chars, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+    XCTAssertEqual(puid.source, "SecRandomCopyBytes")
+    XCTAssertEqual(round2(puid.ere), 0.65)
+    XCTAssertEqual(puid.length, 19)
+  }
+  
   func testRiskAfter() throws {
     let total = 1e6
     let risk = 1e6
