@@ -166,6 +166,11 @@ public struct Puid {
   public func generate() throws -> String {
     try puidEncoder.encode(try puidBits.puidNdxs())
   }
+  /// Approximate risk of repeat after generating some total number of IDs, expressed as 1 in risk chance.
+  public func risk(after total: Double) -> Double {
+    let risk = Entropy.risk(total: total, bits: settings.bits)
+    return risk == 0 ? 0 : 1.0 / risk
+  }
 }
 
 public extension Puid {

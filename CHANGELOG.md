@@ -3,13 +3,14 @@
 ## 1.1.0 (2023-03-20)
 
 ### `RandomNumberGenerator` entropy source
-- Enable use of any Swift `RandomNumberGenerator` to be used as a `PuidEntropySource`
+- Enable any Swift `RandomNumberGenerator` to be used as a `PuidEntropySource`
+
+### `Puid`
+- Public access to individual **puid** generation properties
+- Add `risk(after:)` function
 
 ### `PuidEntropySource` protocol
 - Replace **func method(): String** with **var source: String**
-
-### `Puid` properties
-- Expose individual **puid** generation properties to public access
 
 ### Cleanup
 

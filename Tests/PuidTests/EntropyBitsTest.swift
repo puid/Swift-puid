@@ -43,4 +43,12 @@ final class EntropyBitsTest: XCTestCase {
     assertTotalRisk(1e10, 1e21, 135.2)
   }
   
+  func testRiskAfter() throws {
+    let birthdays = 365.0
+    let people = 23.0
+    let risk = 0.5
+    
+    XCTAssertEqual(round2(Puid.Entropy.risk(total: people, bits: log2(birthdays))), risk)
+  }
+  
 }

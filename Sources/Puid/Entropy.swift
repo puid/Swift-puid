@@ -11,14 +11,22 @@ extension Puid {
     static func bits(total: Double, risk: Double) -> Double {
       guard 1 < total,
             1 < risk else { return 0 }
-      
-      let n = total < 1000 ? log2(total) + log2(total - 1) : 2 * log2(total)
-      
-      return n + log2(risk) - 1.0
+
+      return log2(total) + log2(total - 1) + log2(risk) - 1.0
     }
     
     static func bits(total: Int, risk: Double) -> Double {
       bits(total: Double(total), risk: risk)
+    }
+    
+    static func risk(total: Double, bits: Double) -> Double {
+      guard 1 < total,
+            1 < bits else { return 1 }
+      
+      let n = total * (total - 1)
+      let m = pow(2, bits + 1)
+      
+      return 1 - exp(-n/m)
     }
     
     static func system(_ system: System) -> PuidEntropySource {

@@ -1,6 +1,6 @@
 # Puid
 
-Simple, fast, flexible and efficient generation of probably unique identifiers (`puid`, aka random strings) of intuitively specified entropy using pre-defined or custom characters.
+Simple, fast, flexible and efficient generation of probably unique identifiers (`puid`, aka random strings) of intuitively specified entropy using predefined or custom characters.
 
 ```swift
 import Puid
@@ -40,8 +40,8 @@ try alphaId.generate()
   - [Entropy Source](#EntropySource)
   - [Characters](#Characters)
   - [Randomness](#Randomness)
-- [Installation](#Installation)
 - [Predefined Characters](#Chars)
+- [Installation](#Installation)
 - [License](#License)
 
 ## <a name="Overview"></a>Overview
@@ -145,15 +145,9 @@ try token.generate()
 
 [TOC](#TOC)
 
-### <a name="Installation"></a>Installation
-
-Swift Package Manager URL: https://github.com/puid/Swift-puid
-
-[TOC](#TOC)
-
 ### <a name="Chars"></a>Predefined Characters
 
-The `Puid.Chars` **enum** defines 17 character sets:
+The `Puid.Chars` **enum** includes 17 predefined character sets:
 
 | Name                | Characters                                                                                    |
 | :------------------ | :-------------------------------------------------------------------------------------------- |
@@ -176,6 +170,12 @@ The `Puid.Chars` **enum** defines 17 character sets:
 | .symbol             | !#$%&()\*+,-./:;<=>?@[]^\_{\|}~                                                               |
 
 `Puid.Chars.custom(String)` provides a mechanism to use any **String** of up to 256 unique characters for ID generation.
+
+[TOC](#TOC)
+
+### <a name="Installation"></a>Installation
+
+Swift Package Manager URL: https://github.com/puid/Swift-puid
 
 [TOC](#TOC)
 

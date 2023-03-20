@@ -334,4 +334,13 @@ final class PuidTests: XCTestCase {
     XCTAssertEqual(try id.generate(), "ſŒŀ䷝v")
     XCTAssertEqual(try id.generate(), "ėS䷁a䷯")
   }
+  
+  func testRiskAfter() throws {
+    let total = 1e6
+    let risk = 1e6
+    
+    let puid = try Puid(total: total, risk: risk)
+    
+    XCTAssertTrue(risk < puid.risk(after: total))
+  }
 }
