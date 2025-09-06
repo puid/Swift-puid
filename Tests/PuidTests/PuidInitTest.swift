@@ -133,7 +133,7 @@ final class PuidInitTest: XCTestCase {
            chars: Puid.Chars.safe64,
            ere: 0.75,
            length: 22)
-    XCTAssertEqual(prngId.settings.entropy.source, "UInt64.random")
+    XCTAssertEqual(prngId.settings.entropy.source, "XorShift64*")
     
     let totalRiskPrngId = try Puid(total: 1e7, risk: 1e12, chars: Puid.Chars.hex, entropy: .csprng)
     assert(totalRiskPrngId,
@@ -142,6 +142,12 @@ final class PuidInitTest: XCTestCase {
            chars: Puid.Chars.hex,
            ere: 0.5,
            length: 22)
+  }
+  
+  func testPrngSeededDeterminism() throws {
+    let a = try Puid(bits: 32, chars: .alphaNum, entropy: .prngSeeded(seed: 42))
+    let b = try Puid(bits: 32, chars: .alphaNum, entropy: .prngSeeded(seed: 42))
+    XCTAssertEqual(try a.generate(), try b.generate())
   }
   
   func testDefaultFixed() throws {

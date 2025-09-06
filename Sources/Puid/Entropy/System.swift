@@ -5,11 +5,9 @@
 //
 extension Puid.Entropy {
   public enum System {
-    /// Generate bytes using system cryptographically strong bytes
     case csprng
-    
-    /// Generate bytes using system entropy that may not have security characteristics
     case prng
+    case prngSeeded(seed: UInt64)
   }
 }
 

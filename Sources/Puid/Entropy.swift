@@ -36,6 +36,9 @@ extension Puid {
         case .prng:
           return Puid.Entropy.Source(using: Puid.Entropy.System.Prng.Generator(),
                                         method: Puid.Entropy.System.Prng.Generator.method)
+        case .prngSeeded(let seed):
+          return Puid.Entropy.Source(using: Puid.Entropy.System.Prng.Generator(seed: seed),
+                                        method: Puid.Entropy.System.Prng.Generator.method)
       }
     }
     
