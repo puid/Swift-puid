@@ -1,5 +1,25 @@
 # Changelog
 
+## 2.0.0 (2025-09-06)
+
+Breaking changes
+- Puid.Entropy.System gained a new case .prngSeeded(seed:), which can break exhaustive switches in client code. This warrants a major version bump.
+- PRNG semantics updated: .prng now uses a deterministic, non-cryptographic XorShift64* generator (seeded by uptime nanoseconds by default). Use .prngSeeded(seed:) for explicit seeding. The CSPRNG default remains unchanged.
+- Public error surface refined: PuidError is now public, bytesFailure uses Int32 (cross-platform), and invalidEncoding carries a UInt8 index. Error description strings corrected for typos.
+
+Additions
+- RepeatRisk wrapper and overloads: init(total:risk:RepeatRisk, ...) for self-documenting "1 in N" risk, without increasing parameter count.
+- Linux CSPrng source label clarified to "SystemRandomNumberGenerator" to reflect crypto-secure source on Linux.
+- Swift 6 readiness: StrictConcurrency enabled for the target; Sendable annotations added where reasonable; @unchecked Sendable where appropriate; @preconcurrency on PuidEntropySource; final on Puid.Entropy.Fixed.
+- Platforms expanded in Package.swift to include iOS, tvOS, watchOS.
+- CI matrix expanded to macOS and Linux with Swift 5.9 and 5.10; Codecov upload on macOS.
+- Linting/formatting in CI: SwiftLint (strict) and swift-format lint (macOS).
+- DocC catalog added (Metrics page consolidating ERE/ETE); README updated with non-obvious character set descriptions and Metrics examples (.safe64 and .alpha).
+
+Fixes/cleanup
+- Settings initializer made non-throwing.
+- Typos fixed in error messages ("exhausted", "not supported by encoder").
+
 ## 1.1.1 (2023-03-20)
 
 ### Code coverage 🤦🏽‍♂️

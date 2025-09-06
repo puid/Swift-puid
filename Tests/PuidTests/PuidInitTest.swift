@@ -111,6 +111,22 @@ final class PuidInitTest: XCTestCase {
     XCTAssertEqual(round(a.settings.bits), round(b.settings.bits))
   }
 
+  func testTotalAtRiskProbability() throws {
+    let puid = try Puid(bits: 64, chars: .safe64)
+    let p = 0.5
+    let t = puid.total(atRiskProbability: p)
+    let oneIn = puid.risk(after: t)
+    XCTAssertEqual(oneIn, 1.0 / p, accuracy: 1e-6)
+  }
+
+  func testTotalAtRiskOneIn() throws {
+    let puid = try Puid(bits: 64, chars: .safe64)
+    let oneInTarget = 1e6
+    let t = puid.total(atRiskOneIn: oneInTarget)
+    let oneIn = puid.risk(after: t)
+    XCTAssertEqual(oneIn, oneInTarget, accuracy: 1e-3 * oneInTarget)
+  }
+
   func testTotalRiskCharSet() throws {
     assert(
       try Puid(total: 1e7, risk: 1e12, chars: Puid.Chars.alphaLower),

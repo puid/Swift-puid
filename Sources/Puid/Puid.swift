@@ -217,6 +217,26 @@ extension Puid {
   }
 }
 
+public extension Puid {
+  /// Approximate total number of IDs that can be generated at a target probability of repeat.
+  /// - Parameter p: Probability of repeat in (0, 1)
+  /// - Returns: Approximate total count
+  func total(atRiskProbability p: Double) -> Double {
+    precondition(0 < p && p < 1, "probability must be in (0,1)")
+    let m = pow(2, settings.bits + 1)
+    let n = -m * log(1.0 - p) // n = T*(T-1)
+    return 0.5 * (1.0 + sqrt(1.0 + 4.0 * n))
+  }
+
+  /// Approximate total number of IDs that can be generated at a target 1-in-N risk of repeat.
+  /// - Parameter oneIn: 1-in-N risk, must be > 1
+  /// - Returns: Approximate total count
+  func total(atRiskOneIn oneIn: Double) -> Double {
+    precondition(oneIn > 1, "oneIn must be > 1")
+    return total(atRiskProbability: 1.0 / oneIn)
+  }
+}
+
 extension Puid: @unchecked Sendable {}
 
 extension Puid: CustomStringConvertible {

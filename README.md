@@ -257,6 +257,27 @@ print(alpha.ere)       // ~0.71 (5.7 / 8)
 print(alpha.ete)       // < 1.0 (non power-of-two charset)
 ```
 
+#### Risk helpers
+
+These helpers return the maximum total number of IDs that can be generated (for this Puid instance) before the probability of at least one repeat reaches the specified threshold.
+
+- total(atRiskProbability:): Accepts a probability p in (0, 1).
+- total(atRiskOneIn:): Accepts a one-in-X threshold X > 1.
+
+```swift
+import Puid
+
+let id = try Puid(bits: 128, chars: .safe64)
+
+// One-in-X form (e.g., one-in-a-trillion)
+let maxAtOneIn = id.total(atRiskOneIn: 1e12)
+
+// Probability form (e.g., 1e-12)
+let maxAtProbability = id.total(atRiskProbability: 1e-12)
+
+// Both values are Doubles representing the maximum total IDs before the given repeat risk is met.
+```
+
 [TOC](#TOC)
 
 ### <a name="Installation"></a>Installation
