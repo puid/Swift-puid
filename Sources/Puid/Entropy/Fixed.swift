@@ -13,24 +13,28 @@ extension Puid.Entropy {
     var data: Data
     var bitOffset: Int = 0
     let bitCount: Int
-
+    
     /// Create a Fixed generator using the specified data
     public init(data: Data) {
       self.data = data
       bitCount = 8 * data.count
     }
-
+    
     /// Create a Fixed generator using the specified hex string as data
-    public convenience init(hex: String) {
-      var hexStr = hex.replacingOccurrences(of: " ", with: "")
-      if !hexStr.count.isMultiple(of: 2) {
-        hexStr += "0"
-      }
+    public convenience init(hex: String) throws {
+      let hexStr = hex.replacingOccurrences(of: " ", with: "")
+      guard hexStr.count.isMultiple(of: 2) else { throw PuidError.dataSize }
       
-      let chars = hexStr.map { $0 }
-      let bytes = stride(from: 0, to: chars.count, by: 2)
-        .map { String(chars[$0]) + String(chars[$0 + 1]) }
-        .compactMap { Byte($0, radix: 16) }
+      let chars = Array(hexStr)
+      var bytes: [UInt8] = []
+      bytes.reserveCapacity(chars.count / 2)
+      var i = 0
+      while i < chars.count {
+        let pair = String([chars[i], chars[i+1]])
+        guard let b = UInt8(pair, radix: 16) else { throw PuidError.invalidChar }
+        bytes.append(b)
+        i += 2
+      }
       
       self.init(data: Data(bytes))
     }

@@ -145,7 +145,7 @@ final class PuidInitTest: XCTestCase {
   }
   
   func testDefaultFixed() throws {
-    let fixed = Puid.Entropy.Fixed(hex: "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00")
+    let fixed = try Puid.Entropy.Fixed(hex: "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00")
     
     let defaultFixedId = try Puid(entropy: fixed)
     assert(defaultFixedId,
@@ -158,7 +158,7 @@ final class PuidInitTest: XCTestCase {
   }
   
   func testTotalRiskFixed() throws {
-    let fixed = Puid.Entropy.Fixed(hex: "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00")
+    let fixed = try Puid.Entropy.Fixed(hex: "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00")
     
     let totalRiskFixedId = try Puid(total: 1e7, risk: 1e12, chars: Puid.Chars.alphaLower, entropy: fixed)
     assert(totalRiskFixedId,
@@ -170,7 +170,7 @@ final class PuidInitTest: XCTestCase {
   }
 
   func testEmptyFixed() throws {
-    let emptyBytes = Puid.Entropy.Fixed(hex: "")
+    let emptyBytes = try Puid.Entropy.Fixed(hex: "")
     let emptyFixedId = try Puid(entropy: emptyBytes)
     XCTAssertThrowsError(try emptyFixedId.generate())
 
@@ -182,13 +182,11 @@ final class PuidInitTest: XCTestCase {
   }
 
   func testUtil() throws {
-    let fixed = Puid.Entropy.Fixed(hex: "01 23 45 67")
+    let fixed = try Puid.Entropy.Fixed(hex: "01 23 45 67")
     XCTAssertEqual(fixed.data.hex, "01 23 45 67")
     XCTAssertEqual(fixed.data.binary, "0000 0001 0010 0011 0100 0101 0110 0111")
     
-    let oddBytes = Puid.Entropy.Fixed(hex: "32 1")
-    XCTAssertEqual(oddBytes.data.hex, "32 10")
-    XCTAssertEqual(oddBytes.data.binary, "0011 0010 0001 0000")
+    XCTAssertThrowsError(try Puid.Entropy.Fixed(hex: "32 1"))
   }
 
   func testAllCharSets() throws {

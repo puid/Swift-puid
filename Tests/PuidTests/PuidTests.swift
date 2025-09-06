@@ -13,7 +13,7 @@ final class PuidTests: XCTestCase {
   }
   
   func testAlpha() throws {
-    let fixed = Puid.Entropy.Fixed(hex: "F1 B1 78 0A CE 2B")
+    let fixed = try Puid.Entropy.Fixed(hex: "F1 B1 78 0A CE 2B")
     
     let alpha14Id = try Puid(bits: 14, chars: .alpha, entropy: fixed)
     XCTAssertEqual(try alpha14Id.generate(), "jYv")
@@ -21,7 +21,7 @@ final class PuidTests: XCTestCase {
   }
   
   func testAlphaLower() throws {
-    let fixed = Puid.Entropy.Fixed(hex: "F1 B1 78 0B AA 28")
+    let fixed = try Puid.Entropy.Fixed(hex: "F1 B1 78 0B AA 28")
     
     // shifts: [(25, 5), (27, 4), (31, 3)]
     //
@@ -51,7 +51,7 @@ final class PuidTests: XCTestCase {
   }
   
   func testAlphaUpper() throws {
-    let fixed = Puid.Entropy.Fixed(hex: "F1 B1 78 0A CE 28")
+    let fixed = try Puid.Entropy.Fixed(hex: "F1 B1 78 0A CE 28")
     
     let alphaUpper14Id = try Puid(bits: 14, chars: .alphaUpper, entropy: fixed)
     XCTAssertEqual(try alphaUpper14Id.generate(), "RWF")
@@ -59,7 +59,7 @@ final class PuidTests: XCTestCase {
   }
   
   func testAlphaNum() throws {
-    let fixed = Puid.Entropy.Fixed(hex: "D2 E3 E9 FA 19 00")
+    let fixed = try Puid.Entropy.Fixed(hex: "D2 E3 E9 FA 19 00")
     
     // shifts: [{61, 6}, {63, 5}]
     //
@@ -83,7 +83,7 @@ final class PuidTests: XCTestCase {
   }
 
   func testAlphaNumLower() throws {
-    let fixed = Puid.Entropy.Fixed(hex: "D2 E3 E9 Fa 19 00 C8 2D")
+    let fixed = try Puid.Entropy.Fixed(hex: "D2 E3 E9 Fa 19 00 C8 2D")
     
     let alphaNumLower12 = try Puid(bits: 12, chars: .alphaNumLower, entropy: fixed)
     XCTAssertEqual(try alphaNumLower12.generate(), "s9p")
@@ -91,21 +91,21 @@ final class PuidTests: XCTestCase {
   }
 
   func testAlphaNumUpper() throws {
-    let fixed = Puid.Entropy.Fixed(hex: "D2 E3 E9 Fa 19 00 C8 2D")
+    let fixed = try Puid.Entropy.Fixed(hex: "D2 E3 E9 Fa 19 00 C8 2D")
     
     let alphaNumUpper26 = try Puid(bits: 26, chars: .alphaNumUpper, entropy: fixed)
     XCTAssertEqual(try alphaNumUpper26.generate(), "S9PQIB")
   }
   
   func testBase32() throws {
-    let fixed = Puid.Entropy.Fixed(hex: "D2 E3 E9 DA 19 00 22")
+    let fixed = try Puid.Entropy.Fixed(hex: "D2 E3 E9 DA 19 00 22")
     
     let base32_46Id = try Puid(bits: 46, chars: .base32, entropy: fixed)
     XCTAssertEqual(try base32_46Id.generate(), "2LR6TWQZAA")
   }
 
   func testBase32Hex() throws {
-    let fixed = Puid.Entropy.Fixed(hex: "d2 e3 e9 da 19 03 b7 3c")
+    let fixed = try Puid.Entropy.Fixed(hex: "d2 e3 e9 da 19 03 b7 3c")
     
     let base30Hex33Id = try Puid(bits: 30, chars: .base32Hex, entropy: fixed)
     XCTAssertEqual(try base30Hex33Id.generate(), "qbhujm")
@@ -113,7 +113,7 @@ final class PuidTests: XCTestCase {
   }
   
   func testBase32HexUpper() throws {
-    let fixed = Puid.Entropy.Fixed(hex: "d2 e3 e9 da 19 03 b7 3c")
+    let fixed = try Puid.Entropy.Fixed(hex: "d2 e3 e9 da 19 03 b7 3c")
     
     let base30HexUpper14Id = try Puid(bits: 14, chars: .base32HexUpper, entropy: fixed)
     XCTAssertEqual(try base30HexUpper14Id.generate(), "QBH")
@@ -123,7 +123,7 @@ final class PuidTests: XCTestCase {
   }
   
   func testCrockford32() throws {
-    let fixed = Puid.Entropy.Fixed(hex: "d2 e3 e9 da 19 03 b7 3c 00")
+    let fixed = try Puid.Entropy.Fixed(hex: "d2 e3 e9 da 19 03 b7 3c 00")
     
     let crockford32Id = try Puid(bits: 20, chars: .crockford32, entropy: fixed)
     XCTAssertEqual(try crockford32Id.generate(), "TBHY")
@@ -132,7 +132,7 @@ final class PuidTests: XCTestCase {
   }
 
   func testDecimal() throws {
-    let fixed = Puid.Entropy.Fixed(hex: "d2 e3 e9 da 19 03 b7 3c ff")
+    let fixed = try Puid.Entropy.Fixed(hex: "d2 e3 e9 da 19 03 b7 3c ff")
     
     // shifts: [(9, 4), (11, 3), (15, 2)]
     //
@@ -150,7 +150,7 @@ final class PuidTests: XCTestCase {
   }
 
   func testHex() throws {
-    let fixed = Puid.Entropy.Fixed(hex: "C7 C9 00 2A")
+    let fixed = try Puid.Entropy.Fixed(hex: "C7 C9 00 2A")
     
     let hex8Id = try Puid(bits: 8, chars: .hex, entropy: fixed)
     XCTAssertEqual(try hex8Id.generate(), "c7")
@@ -170,7 +170,7 @@ final class PuidTests: XCTestCase {
   }
     
   func testHexUpper() throws {
-    let fixed = Puid.Entropy.Fixed(hex: "c7 c9 00 2a 16 32")
+    let fixed = try Puid.Entropy.Fixed(hex: "c7 c9 00 2a 16 32")
     
     let hexUpper16Id = try Puid(bits: 12, chars: .hexUpper, entropy: fixed)
     XCTAssertEqual(try hexUpper16Id.generate(), "C7C")
@@ -180,7 +180,7 @@ final class PuidTests: XCTestCase {
   }
   
   func testSafeAscii() throws {
-    let fixed = Puid.Entropy.Fixed(hex: "A6 33 2A BE E6 2D B3 68 41")
+    let fixed = try Puid.Entropy.Fixed(hex: "A6 33 2A BE E6 2D B3 68 41")
     
     // shifts: [(89, 7), (91, 6), (95, 5), (127, 2)]
     //
@@ -198,7 +198,7 @@ final class PuidTests: XCTestCase {
   }
   
   func testSafe32() throws {
-    let fixed = Puid.Entropy.Fixed(hex: "d2 e3 e9 da 19 03 b7 3c")
+    let fixed = try Puid.Entropy.Fixed(hex: "d2 e3 e9 da 19 03 b7 3c")
     
     //    D    2    E    3    E    9    D    A    1    9    0    3    B    7    3    C
     // 1101 0010 1110 0011 1110 1001 1101 1010 0001 1001 0000 0011 1011 0111 0011 1100
@@ -229,7 +229,7 @@ final class PuidTests: XCTestCase {
   }
   
   func testSafe64() throws {
-    let fixed = Puid.Entropy.Fixed(hex: "D2 E3 E9 FA 19 00")
+    let fixed = try Puid.Entropy.Fixed(hex: "D2 E3 E9 FA 19 00")
     
     let puid25 = try Puid(bits: 25, entropy: fixed)
     XCTAssertEqual(try puid25.generate(), "0uPp-")
@@ -241,7 +241,7 @@ final class PuidTests: XCTestCase {
   }
   
   func testDingosky() throws {
-    let fixed = Puid.Entropy.Fixed(hex: "C7 C9 00 2A BD 72")
+    let fixed = try Puid.Entropy.Fixed(hex: "C7 C9 00 2A BD 72")
     
     let dingoskyId = try Puid(bits: 24, chars: .custom("dingosky"), entropy: fixed)
     XCTAssertEqual(try dingoskyId.generate(), "kiyooodd")
@@ -249,7 +249,7 @@ final class PuidTests: XCTestCase {
   }
   
   func testVowels() throws {
-    let fixed = Puid.Entropy.Fixed(hex: "A6 33 F6 9E BD EE A7 00 00")
+    let fixed = try Puid.Entropy.Fixed(hex: "A6 33 F6 9E BD EE A7 00 00")
 
     // shifts: [(9, 4), (11, 3), (15, 2)]
     //
@@ -280,7 +280,7 @@ final class PuidTests: XCTestCase {
   }
   
   func testDîngøsky() throws {
-    let fixed = Puid.Entropy.Fixed(hex: "C7 C9 00 2A BD 72")
+    let fixed = try Puid.Entropy.Fixed(hex: "C7 C9 00 2A BD 72")
     
     let dingoskyId = try Puid(bits: 24, chars: .custom("dîngøsky"), entropy: fixed)
     XCTAssertEqual(try dingoskyId.generate(), "kîyøøødd")
@@ -288,7 +288,7 @@ final class PuidTests: XCTestCase {
   }
 
   func testDîngøskyDog() throws {
-    let fixed = Puid.Entropy.Fixed(hex: "ec f9 db 7a 33 3d 21 97 a0 c2 bf 92 80 dd 2f 57 12 c1 1a ef")
+    let fixed = try Puid.Entropy.Fixed(hex: "ec f9 db 7a 33 3d 21 97 a0 c2 bf 92 80 dd 2f 57 12 c1 1a ef")
     
     let dogId = try Puid(bits: 24, chars: .custom("dîngøsky:🐕"), entropy: fixed)
     XCTAssertEqual(try dogId.generate(), "🐕gî🐕🐕nî🐕")
@@ -297,7 +297,7 @@ final class PuidTests: XCTestCase {
   }
 
   func test256Chars() throws {
-    let fixed = Puid.Entropy.Fixed(hex: "ec f9 db 7a 33 3d 21 97 a0 c2 bf 92 80 dd 2f 57 12 c1 1a ef")
+    let fixed = try Puid.Entropy.Fixed(hex: "ec f9 db 7a 33 3d 21 97 a0 c2 bf 92 80 dd 2f 57 12 c1 1a ef")
     
     let codePoints: [UInt32] =
     [65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84,
