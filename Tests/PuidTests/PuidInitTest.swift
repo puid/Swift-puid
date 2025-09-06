@@ -94,6 +94,13 @@ final class PuidInitTest: XCTestCase {
            ere: 0.75,
            length: 15)
   }
+  
+  func testRiskWrapperParity() throws {
+    let a = try Puid(total: 100_000, risk: 1e12)
+    let b = try Puid(total: 100_000, risk: RepeatRisk.oneIn(1e12))
+    XCTAssertEqual(a.settings.length, b.settings.length)
+    XCTAssertEqual(round(a.settings.bits), round(b.settings.bits))
+  }
 
   func testTotalRiskCharSet() throws {
     assert(try Puid(total: 1e7, risk: 1e12, chars: Puid.Chars.alphaLower),

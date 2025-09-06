@@ -135,6 +135,10 @@ A critical aspect of random ID generation is, of course, the randomness of the I
 let randId = try Puid(total: 1e5, risk: 1e12, chars: .safe32)
 try randId.generate()
 // => "dqHqFD79QGd2TNP"
+
+// Using a self-documenting risk wrapper (same result)
+let wrapped = try Puid(total: 100_000, risk: RepeatRisk.oneIn(1e12), chars: .safe32)
+try wrapped.generate()
 ```
 
 In the above example, a `total` of **100,000** IDs can be generated with a 1 in a trillion `risk` of repeat. Remember, **_all_** random ID generation has an **_inherent risk of repeat_**. There is simply no such thing as a _univerally unique_ ID, regardless of the UUID moniker. Rather than blindly use one-size-fits-all (which, for UUID, may be better described as an inefficient, one-size-fits-none solution), `Puid` allows full control so that risk can be _explicitly_ declared as appropriate for specific application need.
