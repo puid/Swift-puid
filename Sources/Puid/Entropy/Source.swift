@@ -94,3 +94,5 @@ public extension Puid.Entropy {
     }
   }
 }
+
+extension Puid.Entropy.Source: @unchecked Sendable {}

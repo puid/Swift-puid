@@ -7,7 +7,7 @@
 import Foundation
 
 extension Puid.Chars {
-  public struct Metrics {
+  public struct Metrics: Sendable {
     public let avgBits: Double
     public let bitShifts: [BitShift]
     public let ere: Double
@@ -49,7 +49,7 @@ extension Puid.Chars {
 }
 
 public extension Puid.Chars {
-  struct BitShift {
+  struct BitShift: Sendable {
     public let value: Int
     public let shift: Int
   }

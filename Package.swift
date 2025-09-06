@@ -18,7 +18,10 @@ let package = Package(
   targets: [
     .target(
       name: "Puid",
-      dependencies: []),
+      dependencies: [],
+      swiftSettings: [
+        .enableUpcomingFeature("StrictConcurrency")
+      ]),
     .testTarget(
       name: "PuidTests",
       dependencies: ["Puid"]),

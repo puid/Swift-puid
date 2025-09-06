@@ -206,6 +206,8 @@ public extension Puid {
   }
 }
 
+extension Puid: @unchecked Sendable {}
+
 extension Puid: CustomStringConvertible {
   /// A listing of the parameterization of a **PUID** generator
   public var description: String {

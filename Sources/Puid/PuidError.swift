@@ -7,7 +7,7 @@
 import Foundation
 
 /// Error type thrown by **PUID** package functions
-public enum PuidError: Error {
+public enum PuidError: Error, Sendable {
   case bytesExhausted
   case bytesFailure(status: Int32)
   case charsNotUnique
@@ -33,7 +33,7 @@ public enum PuidError: Error {
       case .invalidEncoder:
         return "Invalid encoder: override Encoder.encode method"
       case .invalidEncoding(let puidNdx):
-        return "Invalid encoding: puidNdx=\(puidNdx) not support by encoder"
+        return "Invalid encoding: puidNdx=\(puidNdx) not supported by encoder"
       case .tooFewChars:
         return "Require at least 2 characters"
       case .tooManyChars:

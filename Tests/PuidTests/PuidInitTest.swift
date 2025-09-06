@@ -277,7 +277,7 @@ final class PuidInitTest: XCTestCase {
       let tfId = try Puid(chars: .custom("TF"))
       let _ = try tfId.puidEncoder.encode([0,1,1,0,2,1])
     } catch (let error as PuidError){
-      XCTAssertEqual(error.description, "Invalid encoding: puidNdx=2 not support by encoder")
+      XCTAssertEqual(error.description, "Invalid encoding: puidNdx=2 not supported by encoder")
     }
   }
 }

@@ -9,7 +9,7 @@ extension Puid.Entropy {
   /// A **PUID** bytes generator that uses fixed bytes
   ///
   /// This generator is useful for deterministic testing and not intended for production use
-  public class Fixed: PuidEntropySource {
+public final class Fixed: PuidEntropySource {
     var data: Data
     var bitOffset: Int = 0
     let bitCount: Int

@@ -6,7 +6,7 @@
 
 import Foundation
 
-public protocol PuidEntropySource {
+@preconcurrency public protocol PuidEntropySource {
   /// Fill the supplied `Data` with `count` bytes at the specified `offset`
   ///
   /// - Parameter into: Data into which the bytes are copied

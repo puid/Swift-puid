@@ -306,8 +306,8 @@ extension Puid.Chars: Equatable {
   }
 }
 
-extension Puid.Chars: CaseIterable {
-  public static var allCases: [Puid.Chars] = [
+extension Puid.Chars: CaseIterable, Sendable {
+  public static let allCases: [Puid.Chars] = [
     .alpha,
     .alphaLower,
     .alphaUpper,
