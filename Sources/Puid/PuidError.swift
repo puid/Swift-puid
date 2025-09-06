@@ -23,7 +23,7 @@ enum PuidError: Error {
       case .bytesFailure(let status):
         return "Failed to generate bytes with status: \(status)"
       case .bytesExhausted:
-        return "Bytes are exhuasted"
+        return "Bytes are exhausted"
       case .charsNotUnique:
         return "Characters not unique"
       case .dataSize:

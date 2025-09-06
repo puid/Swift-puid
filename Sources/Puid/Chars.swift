@@ -201,7 +201,7 @@ extension Puid.Chars {
   }
   
   var bitShifts: [Puid.Bits.Shift] {
-    let iBitsPerChar = Puid.Util.iCeil(Puid.Util.log2i(string.count))
+    let iBitsPerChar = Puid.Util.ceilLog2(string.count)
     let baseValue = string.count % 2 == 0 ? string.count - 1 : string.count
     let baseShift: Puid.Bits.Shift = Puid.Bits.Shift(value: baseValue, shift: iBitsPerChar)
     
@@ -213,7 +213,7 @@ extension Puid.Chars {
       .map { $0 }
       .reduce(into: [baseShift]) { acc, bit in
         if Puid.Util.isBitZero(n: baseValue, bit: bit) {
-          let value = baseValue | (Puid.Util.iPow2(bit) - 1)
+          let value = baseValue | ((1 << bit) - 1)
           let shift = iBitsPerChar - bit + 1
           acc.append(Puid.Bits.Shift(value: value, shift: shift))
         }

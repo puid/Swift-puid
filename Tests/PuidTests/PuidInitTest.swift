@@ -169,7 +169,7 @@ final class PuidInitTest: XCTestCase {
            length: 19)
   }
 
-  func testEmtpyFixed() throws {
+  func testEmptyFixed() throws {
     let emptyBytes = Puid.Entropy.Fixed(hex: "")
     let emptyFixedId = try Puid(entropy: emptyBytes)
     XCTAssertThrowsError(try emptyFixedId.generate())
@@ -177,7 +177,7 @@ final class PuidInitTest: XCTestCase {
     do {
       let _ = try emptyFixedId.generate()
     } catch (let error as PuidError) {
-      XCTAssertEqual(error.description, "Bytes are exhuasted")
+      XCTAssertEqual(error.description, "Bytes are exhausted")
     }
   }
 
@@ -203,8 +203,8 @@ final class PuidInitTest: XCTestCase {
 
   func testInvalidAscii() throws {
     assertThrows("dingo sky", "Should reject space")
-    assertThrows("dingo\"sky", "Should reject double-qoute")
-    assertThrows("dingo\'sky", "Should reject single-qoute")
+    assertThrows("dingo\"sky", "Should reject double-quote")
+    assertThrows("dingo\'sky", "Should reject single-quote")
     assertThrows("dingo\\sky", "Should reject backslash")
     assertThrows("dingo`sky", "Should reject backtick")
     assertThrows("dingo\u{0099}sky", "Should reject between tilde and inverted bang")

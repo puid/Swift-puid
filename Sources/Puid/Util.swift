@@ -8,7 +8,8 @@ import Foundation
 extension Puid {
   struct Util {
     static func isBitZero(n: Int, bit: Int) -> Bool {
-      (n & (1 << (bit-1))) == 0
+      precondition(bit > 0 && bit <= Int.bitWidth)
+      return (n & (1 << (bit - 1))) == 0
     }
     
     static func iCeil(_ value: Double) -> Int {
@@ -19,16 +20,24 @@ extension Puid {
       log2(Double(value))
     }
     
-    static func isPow2(_ n: Int) -> Bool {
-      n - iPow2(round(log2i(n))) == 0
+    static func floorLog2(_ n: Int) -> Int {
+      precondition(n > 0)
+      return Int.bitWidth - 1 - n.leadingZeroBitCount
     }
     
-    static func iPow2(_ n: Double) -> Int {
-      Int(pow(2, n))
+    static func ceilLog2(_ n: Int) -> Int {
+      precondition(n > 0)
+      let f = floorLog2(n)
+      return isPow2(n) ? f : f + 1
+    }
+    
+    static func isPow2(_ n: Int) -> Bool {
+      n > 0 && (n & (n - 1)) == 0
     }
     
     static func iPow2(_ n: Int) -> Int {
-      Int(pow(2, Double(n)))
+      precondition(n >= 0 && n < Int.bitWidth)
+      return 1 << n
     }
   }
 }
