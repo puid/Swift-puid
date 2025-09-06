@@ -152,61 +152,109 @@ try token.generate()
 ```
 
 [TOC](#TOC)
-### <a name="Chars"></a>Predefined Characters
+### <a name="Chars"></a>Predefined Character Sets
 
-The `Puid.Chars` enum includes predefined character sets:
+| Name | Count | ERE | ETE | Characters |
+|------|--------|-----|-----|------------|
+| .alpha | 52 | 5.7 | 0.84 | ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz |
+| .alphaLower | 26 | 4.7 | 0.81 | abcdefghijklmnopqrstuvwxyz |
+| .alphaUpper | 26 | 4.7 | 0.81 | ABCDEFGHIJKLMNOPQRSTUVWXYZ |
+| .alphaNum | 62 | 5.95 | 0.97 | ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 |
+| .alphaNumLower | 36 | 5.17 | 0.65 | abcdefghijklmnopqrstuvwxyz0123456789 |
+| .alphaNumUpper | 36 | 5.17 | 0.65 | ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 |
+| .base16 | 16 | 4.0 | 1.0 | 0123456789ABCDEF |
+| .base32 | 32 | 5.0 | 1.0 | ABCDEFGHIJKLMNOPQRSTUVWXYZ234567 |
+| .base32Hex | 32 | 5.0 | 1.0 | 0123456789abcdefghijklmnopqrstuv |
+| .base32HexUpper | 32 | 5.0 | 1.0 | 0123456789ABCDEFGHIJKLMNOPQRSTUV |
+| .base36 | 36 | 5.17 | 0.65 | 0123456789abcdefghijklmnopqrstuvwxyz |
+| .base36Upper | 36 | 5.17 | 0.65 | 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ |
+| .base58 | 58 | 5.86 | 0.91 | 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz |
+| .base62 | 62 | 5.95 | 0.97 | ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 |
+| .bech32 | 32 | 5.0 | 1.0 | 023456789acdefghjklmnpqrstuvwxyz |
+| .boolean | 2 | 1.0 | 1.0 | TF |
+| .crockford32 | 32 | 5.0 | 1.0 | 0123456789ABCDEFGHJKMNPQRSTVWXYZ |
+| .decimal | 10 | 3.32 | 0.62 | 0123456789 |
+| .dna | 4 | 2.0 | 1.0 | ACGT |
+| .geohash | 32 | 5.0 | 1.0 | 0123456789bcdefghjkmnpqrstuvwxyz |
+| .hex | 16 | 4.0 | 1.0 | 0123456789abcdef |
+| .hexUpper | 16 | 4.0 | 1.0 | 0123456789ABCDEF |
+| .safeAscii | 90 | 6.49 | 0.8 | !#$%&()\*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ\[\]^\_abcdefghijklmnopqrstuvwxyz{\|}~ |
+| .safe32 | 32 | 5.0 | 1.0 | 2346789bdfghjmnpqrtBDFGHJLMNPQRT |
+| .safe64 | 64 | 6.0 | 1.0 | ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-\_ |
+| .symbol | 28 | 4.81 | 0.89 | !#$%&()\*+,-./:;<=>?@\[\]^\_{\|}~ |
+| .urlSafe | 66 | 6.04 | 0.63 | ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.\_~ |
+| .wordSafe32 | 32 | 5.0 | 1.0 | 23456789CFGHJMPQRVWXcfghjmpqrvwx |
+| .zBase32 | 32 | 5.0 | 1.0 | ybndrfg8ejkmcpqxot1uwisza345h769 |
 
-| Name             | Characters                                                                                     |
-| :--------------- | :--------------------------------------------------------------------------------------------- |
-| .alpha           | ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz                                           |
-| .alphaLower      | abcdefghijklmnopqrstuvwxyz                                                                     |
-| .alphaUpper      | ABCDEFGHIJKLMNOPQRSTUVWXYZ                                                                     |
-| .alphaNum        | ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789                                 |
-| .alphaNumLower   | abcdefghijklmnopqrstuvwxyz0123456789                                                           |
-| .alphaNumUpper   | ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789                                                           |
-| .base16          | 0123456789ABCDEF                                                                               |
-| .base32          | ABCDEFGHIJKLMNOPQRSTUVWXYZ234567                                                               |
-| .base32Hex       | 0123456789abcdefghijklmnopqrstuv                                                               |
-| .base32HexUpper  | 0123456789ABCDEFGHIJKLMNOPQRSTUV                                                               |
-| .base36          | 0123456789abcdefghijklmnopqrstuvwxyz                                                           |
-| .base36Upper     | 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ                                                           |
-| .base58          | 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz                                      |
-| .base62          | ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789                                 |
-| .bech32          | 023456789acdefghjklmnpqrstuvwxyz                                                               |
-| .boolean         | TF                                                                                              |
-| .crockford32     | 0123456789ABCDEFGHJKMNPQRSTVWXYZ                                                               |
-| .decimal         | 0123456789                                                                                     |
-| .dna             | ACGT                                                                                           |
-| .geohash         | 0123456789bcdefghjkmnpqrstuvwxyz                                                               |
-| .hex             | 0123456789abcdef                                                                               |
-| .hexUpper        | 0123456789ABCDEF                                                                               |
-| .safeAscii       | !#$%&()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~      |
-| .safe32          | 2346789bdfghjmnpqrtBDFGHJLMNPQRT                                                               |
-| .safe64          | ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-\_                              |
-| .symbol          | !#$%&()*+,-./:;<=>?@[]^_{|}~                                                                   |
-| .urlSafe         | ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~                              |
-| .wordSafe32      | 23456789CFGHJMPQRVWXcfghjmpqrvwx                                                               |
-| .zBase32         | ybndrfg8ejkmcpqxot1uwisza345h769                                                               |
-| .symbol             | !#$%&()\*+,-./:;<=>?@[]^\_{\|}~                                                               |
 
-`Puid.Chars.custom(String)` provides a mechanism to use any **String** of up to 256 unique characters for ID generation.
+Note: The [Metrics](#metrics) section explains ERE and ETE.
 
 [TOC](#TOC)
 
+#### Description of non-obvious character sets
+
+| Name               | Description                                                |
+| :----------------- | :--------------------------------------------------------- |
+| .base16            | https://datatracker.ietf.org/doc/html/rfc4648#section-8   |
+| .base32            | https://datatracker.ietf.org/doc/html/rfc4648#section-6   |
+| .base32Hex         | Lowercase of .base32HexUpper                               |
+| .base32HexUpper    | https://datatracker.ietf.org/doc/html/rfc4648#section-7   |
+| .base36            | Used by many URL shorteners                                |
+| .base58            | Bitcoin base58 alphabet (excludes 0, O, I, l)             |
+| .bech32            | Bitcoin SegWit address encoding                            |
+| .dna               | DNA nucleotide bases (Adenine, Cytosine, Guanine, Thymine) |
+| .crockford32       | https://www.crockford.com/base32.html                      |
+| .geohash           | Used for encoding geographic coordinates                   |
+| .safeAscii         | Printable ASCII that does not require escape in String     |
+| .safe32            | Letters/numbers picked to reduce chance of English words   |
+| .safe64            | https://datatracker.ietf.org/doc/html/rfc4648#section-5    |
+| .urlSafe           | https://datatracker.ietf.org/doc/html/rfc3986#section-2.3  |
+| .wordSafe32        | Letters/numbers picked to reduce chance of English words   |
+| .zBase32           | Zooko’s Base32                                             |
+
+#### Custom
+
+Any `String` of up to 256 unique characters can be used for **`puid`** generation, with custom characters optimized in the same manner as the pre-defined character sets. The characters must be unique. This isn't strictly a technical requirement, **PUID** could handle duplicate characters, but the resulting randomness of the IDs is maximal when the characters are unique, so **PUID** enforces that restriction.
+
+
 ### Metrics
 
-Puid exposes character set metrics analogous to Puid.Chars.metrics/1 in the Elixir library. Use Puid.Chars.metrics(_:) to inspect bit slicing characteristics and efficiency values for any predefined or custom charset.
+#### Entropy Representation Efficiency
 
-Example:
+Entropy Representation Efficiency (ERE) is a measure of how efficient a string ID represents the entropy of the ID itself. When referring to the entropy of an ID, we mean the Shannon Entropy of the character sequence, and that is maximal when all the permissible characters are equally likely to occur. In most random ID generators, this is the case, and the ERE is solely dependent on the count of characters in the charset, where each character represents **log2(count)** of entropy (a computer specific calc of general Shannon entropy). For example, for a hex charset there are **16** hex characters, so each character "carries" **log2(16) = 4** bits of entropy in the string ID. We say the bits per character is **4** and a random ID of **12** hex characters has **48** bits of entropy.
+
+ERE is measured as a ratio of the bits of entropy for the ID divided by the number of bits require to represent the string (**8** bits per ID character). If each character is equally probably (the most common case), ERE is **(bits-per-char * id_len) / (8 bits * id_len)**, which simplifies to **bits-per-character/8**. The BPC displayed in the Puid Characters table is equivalent to the ERE for that charset.
+
+There is, however, a particular random ID exception where each character is _**not**_ equally probable, namely, the often used v4 format of UUIDs. In that format, there are hyphens that carry no entropy (entropy is uncertainty, and there is _**no uncertainly**_ as to where those hyphens will be), one hex digit that is actually constrained to 1 of only 4 hex values and another that is fixed. This formatting results in a ID of 36 characters with a total entropy of 122 bits. The ERE of a v4 UUID is, therefore, **122 / (8 * 36) = 0.4236**.
+
+#### Entropy Transform Efficiency
+
+Entropy Transform Efficiency (ETE) is a measure of how efficiently source entropy is transformed into random ID entropy. For charsets with a character count that is a power of 2, all of the source entropy bits can be utilized during random ID generation. Each generated ID character requires exactly **log2(count)** bits, so the incoming source entropy can easily be carved into appropriate indices for character selection. Since ETE represents the ratio of output entropy bits to input entropy source, when all of the bits are utilized ETE is **1.0**.
+
+Even for charsets with power of 2 character count, ETE is only the theoretical maximum of **1.0** _**if**_ the input entropy source is used as described above. Unfortunately, that is not the case with many random ID generation schemes. Some schemes use the entire output of a call to source entropy to create a single index used to select a character. Such schemes have very poor ETE.
+
+For charsets with a character count that is not a power of 2, some bits will inevitably be discarded since the smallest number of bits required to select a character, **ceil(log2(count))**, will potentially result in an index beyond the character count. A first-cut, naïve approach to this reality is to simply throw away all the bits when the index is too large.
+
+However, a more sophisticated scheme of bit slicing can actually improve on the naïve approach. Puid extends the bit slicing scheme by adding a bit shifting scheme to the algorithm, wherein a _**minimum**_ number of bits in the "over the limit" bits are discarded by observing that some bit patterns of length less than **ceil(log2(count))** already guarantee the bits will be over the limit, and _**only**_ those bits need be discarded. 
+
+As example, using the **:alphanum_lower** charset, which has 36 characters, **ceil(log2(36)) = 6** bits are required to create a suitable index. However, if those bits start with the bit pattern **11xxxx**, the index would be out of bounds regardless of the **xxxx** bits, so Puid only tosses the first two bits and keeps the trailing four bits for use in the next index. (It is beyond scope to discuss here, but analysis shows this bit shifting scheme does not alter the random characteristics of generated IDs). So whereas the naïve approach would have an ETE of **0.485**, Puid achieves an ETE of **0.646**, a **33%** improvement. 
+
+#### Example
 
 ```swift
 import Puid
 
-let m = Puid.Chars.metrics(.safe64)
-print(m.avgBits)    // 6.0
-print(m.bitShifts)  // [(value: 63, shift: 6)]
-print(m.ere)        // 0.75
-print(m.ete)        // 1.0
+let safe = Puid.Chars.metrics(.safe64)
+print(safe.avgBits)    // 6.0
+print(safe.bitShifts)  // [BitShift(value: 63, shift: 6)]
+print(safe.ere)        // 0.75
+print(safe.ete)        // 1.0
+
+let alpha = Puid.Chars.metrics(.alpha)
+print(alpha.avgBits)   // > 6.0 (accounts for rare rejects)
+print(alpha.bitShifts) // e.g., [BitShift(value: 51, shift: 6), ...]
+print(alpha.ere)       // ~0.71 (5.7 / 8)
+print(alpha.ete)       // < 1.0 (non power-of-two charset)
 ```
 
 [TOC](#TOC)

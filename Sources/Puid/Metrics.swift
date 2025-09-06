@@ -7,6 +7,12 @@
 import Foundation
 
 extension Puid.Chars {
+  /// Metrics describing entropy representation and transform efficiency for a charset.
+  ///
+  /// - avgBits: Average number of source entropy bits consumed per output character.
+  /// - bitShifts: The reject-shift rules used when a sliced index is out of range.
+  /// - ere: Entropy Representation Efficiency (ERE) of the string encoding.
+  /// - ete: Entropy Transform Efficiency (ETE) of the bit-slicing algorithm.
   public struct Metrics: Sendable {
     public let avgBits: Double
     public let bitShifts: [BitShift]
@@ -14,6 +20,10 @@ extension Puid.Chars {
     public let ete: Double
   }
 
+  /// Compute metrics for a predefined or custom charset.
+  ///
+  /// - Parameter chars: The charset to analyze.
+  /// - Returns: Metrics containing avgBits, bitShifts, ERE and ETE.
   public static func metrics(_ chars: Puid.Chars) -> Metrics {
     let count = chars.count
     let bitShiftsInternal = chars.bitShifts
@@ -48,8 +58,11 @@ extension Puid.Chars {
   }
 }
 
-extension Puid.Chars {
-  public struct BitShift: Sendable {
+public extension Puid.Chars {
+  /// A reject-shift rule used when a sliced index exceeds the charset size.
+  ///
+  /// If the sliced index is larger than `value`, `shift` bits are discarded and decoding resumes.
+  struct BitShift: Sendable {
     public let value: Int
     public let shift: Int
   }

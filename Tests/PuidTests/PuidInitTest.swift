@@ -44,9 +44,9 @@ final class PuidInitTest: XCTestCase {
       length: 22)
     #if canImport(Darwin)
       XCTAssertEqual(puid.settings.entropy.source, "SecRandomCopyBytes")
-    #elseif os(Linux)
-      XCTAssertEqual(puid.settings.entropy.source, "UInt8.random")
-    #endif
+#elseif os(Linux)
+    XCTAssertEqual(puid.settings.entropy.source, "SystemRandomNumberGenerator")
+#endif
 
     XCTAssertNotNil(puid.description)
     XCTAssertNotNil(puid.settings.debugDescription)
