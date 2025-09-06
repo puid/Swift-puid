@@ -9,25 +9,45 @@ on:
 
 jobs:
   test:
-    runs-on: macOS-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ macos-latest, ubuntu-latest ]
+        swift: [ '5.9' ]
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Setup Swift (Linux)
+        if: runner.os == 'Linux'
+        uses: swift-actions/setup-swift@v2
+        with:
+          swift-version: ${{ matrix.swift }}
 
       - name: Build
         run: swift build -v
 
       - name: Checkout Data Submodule
-        run: git submodule update --init --recursive        
+        run: git submodule update --init --recursive
 
-      - name: Run Tests
+      - name: Run Tests (Linux)
+        if: runner.os == 'Linux'
+        run: swift test -v
+
+      - name: Run Tests with Coverage (macOS)
+        if: runner.os == 'macOS'
         run: swift test --enable-code-coverage -v
 
-      - name: Generate Coverage Report
+      - name: Generate Coverage Report (macOS)
+        if: runner.os == 'macOS'
         run: xcrun llvm-cov export -format="lcov" .build/debug/PuidPackageTests.xctest/Contents/MacOS/PuidPackageTests -instr-profile .build/debug/codecov/default.profdata > coverage_report.lcov
 
-      - name: Upload Coverage Report
+      - name: Upload Coverage Report (macOS)
+        if: runner.os == 'macOS'
         uses: codecov/codecov-action@v3
         with:
           fail_ci_if_error: true

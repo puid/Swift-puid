@@ -59,18 +59,15 @@ extension Puid {
     }
     
     private func parseNdx() throws -> PuidNdx {
-      try fillEntropy()
-      
-      let ndx = sliceBits()
-      
-      if ndx < nChars {
-        bitOffset += nBitsPerChar
-        return ndx
+      while true {
+        try fillEntropy()
+        let ndx = sliceBits()
+        if ndx < nChars {
+          bitOffset += nBitsPerChar
+          return ndx
+        }
+        bitOffset += ndxShift[Int(ndx)]
       }
-      
-      bitOffset += ndxShift[Int(ndx)]
-      
-      return try parseNdx()
     }
   
     private func sliceBits() -> PuidNdx {
