@@ -9,12 +9,15 @@ Breaking changes
 
 Additions
 - RepeatRisk wrapper and overloads: init(total:risk:RepeatRisk, ...) for self-documenting "1 in N" risk, without increasing parameter count.
+- Encode/Decode APIs: Puid.encode(bits:) and Puid.decode(_:) for converting between puid strings and representative bits (decode supported for ASCII charsets). Not a generic binary encoding; unused trailing bits are ignored/zeroed.
+- README updates: Added Encode/Decode section with non-round-trip example; expanded Risk helpers to include total(atRiskProbability:), total(atRiskOneIn:) and risk(after:), with examples.
+- DocC: New EncodeDecode page; Metrics page retained and linked from the catalog index.
 - Linux CSPrng source label clarified to "SystemRandomNumberGenerator" to reflect crypto-secure source on Linux.
 - Swift 6 readiness: StrictConcurrency enabled for the target; Sendable annotations added where reasonable; @unchecked Sendable where appropriate; @preconcurrency on PuidEntropySource; final on Puid.Entropy.Fixed.
 - Platforms expanded in Package.swift to include iOS, tvOS, watchOS.
 - CI matrix expanded to macOS and Linux with Swift 5.9 and 5.10; Codecov upload on macOS.
 - Linting/formatting in CI: SwiftLint (strict) and swift-format lint (macOS).
-- DocC catalog added (Metrics page consolidating ERE/ETE); README updated with non-obvious character set descriptions and Metrics examples (.safe64 and .alpha).
+- Developer UX: Added a Scratch executable target for quick local experiments (swift run Scratch).
 
 Fixes/cleanup
 - Settings initializer made non-throwing.

@@ -4,6 +4,8 @@
 //  MIT License: See project LICENSE.txt
 //
 
+import Foundation
+
 typealias Byte = UInt8
 typealias Bytes = [Byte]
 
@@ -217,21 +219,21 @@ extension Puid {
   }
 }
 
-public extension Puid {
+extension Puid {
   /// Approximate total number of IDs that can be generated at a target probability of repeat.
   /// - Parameter p: Probability of repeat in (0, 1)
   /// - Returns: Approximate total count
-  func total(atRiskProbability p: Double) -> Double {
+  public func total(atRiskProbability p: Double) -> Double {
     precondition(0 < p && p < 1, "probability must be in (0,1)")
     let m = pow(2, settings.bits + 1)
-    let n = -m * log(1.0 - p) // n = T*(T-1)
+    let n = -m * log(1.0 - p)  // n = T*(T-1)
     return 0.5 * (1.0 + sqrt(1.0 + 4.0 * n))
   }
 
   /// Approximate total number of IDs that can be generated at a target 1-in-N risk of repeat.
   /// - Parameter oneIn: 1-in-N risk, must be > 1
   /// - Returns: Approximate total count
-  func total(atRiskOneIn oneIn: Double) -> Double {
+  public func total(atRiskOneIn oneIn: Double) -> Double {
     precondition(oneIn > 1, "oneIn must be > 1")
     return total(atRiskProbability: 1.0 / oneIn)
   }
@@ -243,6 +245,103 @@ extension Puid: CustomStringConvertible {
   /// A listing of the parameterization of a **PUID** generator
   public var description: String {
     "Puid:\n\(settings.description)"
+  }
+}
+
+extension Puid {
+  public func encode(bits data: Data) throws -> String {
+    let nBitsPerChar = Puid.Util.iCeil(settings.bitsPerChar)
+    let expectedBits = nBitsPerChar * settings.length
+    let expectedBytes = Int(ceil(Double(expectedBits) / 8.0))
+
+    guard data.count == expectedBytes else { throw PuidError.dataSize }
+
+    var pos = 0
+    var ndxs = PuidNdxs(repeating: 0, count: settings.length)
+    var i = 0
+    while i < settings.length {
+      let v = try readValue(from: data, at: pos, width: nBitsPerChar)
+      if Int(v) >= settings.chars.count { throw PuidError.invalidEncoding(puidNdx: v) }
+      ndxs[i] = v
+      pos += nBitsPerChar
+      i += 1
+    }
+    return try puidEncoder.encode(ndxs)
+  }
+
+  public func decode(_ puid: String) throws -> Data {
+    let (enc, _) = settings.chars.encoding()
+    if enc != .ascii { throw PuidError.invalidEncoder }
+    if puid.count != settings.length { throw PuidError.dataSize }
+
+    let nBitsPerChar = Puid.Util.iCeil(settings.bitsPerChar)
+    let expectedBits = nBitsPerChar * settings.length
+    let expectedBytes = Int(ceil(Double(expectedBits) / 8.0))
+
+    var map: [Character: Int] = [:]
+    for (idx, ch) in settings.chars.string.enumerated() { map[ch] = idx }
+
+    var ndxs = [UInt8]()
+    ndxs.reserveCapacity(settings.length)
+    for ch in puid {
+      guard let v = map[ch] else { throw PuidError.invalidChar }
+      ndxs.append(UInt8(v))
+    }
+
+    var out = Data(count: expectedBytes)
+    var pos = 0
+    for v in ndxs {
+      writeValue(v, width: nBitsPerChar, at: pos, into: &out)
+      pos += nBitsPerChar
+    }
+    return out
+  }
+}
+
+extension Puid {
+  fileprivate func readValue(from data: Data, at pos: Int, width: Int) throws -> UInt8 {
+    let lByteNdx = pos >> 3
+    let lByte = data[lByteNdx]
+    let lBitNum = pos % 8
+
+    if lBitNum + width <= 8 {
+      return ((lByte << lBitNum) & 0xff) >> (8 - width)
+    }
+
+    let rByte = data[lByteNdx + 1]
+    let rBitNum = lBitNum + width - 8
+
+    let lValue = ((lByte << lBitNum) & 0xff) >> (lBitNum - rBitNum)
+    let rValue = rByte >> (8 - rBitNum)
+
+    return lValue + rValue
+  }
+
+  fileprivate func writeValue(_ value: UInt8, width: Int, at pos: Int, into data: inout Data) {
+    var remaining = width
+    var v = Int(value)
+    var bitPos = pos
+
+    while remaining > 0 {
+      let byteIndex = bitPos >> 3
+      let bitIndex = bitPos % 8
+      let space = 8 - bitIndex
+      let take = remaining < space ? remaining : space
+
+      let shift = remaining - take
+      let chunk = (v >> shift) & ((1 << take) - 1)
+
+      let leftShift = space - take
+      let mask = ((1 << take) - 1) << leftShift
+
+      var byte = Int(data[byteIndex])
+      byte = (byte & (~mask & 0xFF)) | ((chunk << leftShift) & mask)
+      data[byteIndex] = UInt8(byte & 0xFF)
+
+      remaining -= take
+      bitPos += take
+      v = v & ((1 << shift) - 1)
+    }
   }
 }
 

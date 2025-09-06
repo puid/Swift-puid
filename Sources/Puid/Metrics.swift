@@ -58,11 +58,11 @@ extension Puid.Chars {
   }
 }
 
-public extension Puid.Chars {
+extension Puid.Chars {
   /// A reject-shift rule used when a sliced index exceeds the charset size.
   ///
   /// If the sliced index is larger than `value`, `shift` bits are discarded and decoding resumes.
-  struct BitShift: Sendable {
+  public struct BitShift: Sendable {
     public let value: Int
     public let shift: Int
   }

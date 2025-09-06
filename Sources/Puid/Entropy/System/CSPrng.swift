@@ -41,11 +41,11 @@ extension Puid.Entropy.System {
     }
 
     var source: String {
-#if canImport(Darwin)
-      "SecRandomCopyBytes"
-#elseif os(Linux)
-      "SystemRandomNumberGenerator"
-#endif
+      #if canImport(Darwin)
+        "SecRandomCopyBytes"
+      #elseif os(Linux)
+        "SystemRandomNumberGenerator"
+      #endif
     }
   }
 }
