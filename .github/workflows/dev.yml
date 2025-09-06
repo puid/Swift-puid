@@ -6,14 +6,24 @@ on:
 
 jobs:
   test:
-    runs-on: macOS-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ macos-latest, ubuntu-latest ]
+        swift: [ '5.9' ]
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          submodules: recursive
 
-      - name: Checkout submodules
-        run: git submodule update --init --recursive        
+      - name: Setup Swift (Linux)
+        if: runner.os == 'Linux'
+        uses: swift-actions/setup-swift@v2
+        with:
+          swift-version: ${{ matrix.swift }}
 
       - name: Build
         run: swift build -v
