@@ -7,14 +7,14 @@
 import Foundation
 
 /// Error type thrown by **PUID** package functions
-enum PuidError: Error {
+public enum PuidError: Error {
   case bytesExhausted
-  case bytesFailure(status: EntropyStatus)
+  case bytesFailure(status: Int32)
   case charsNotUnique
   case dataSize
   case invalidChar
   case invalidEncoder
-  case invalidEncoding(puidNdx: PuidNdx)
+  case invalidEncoding(puidNdx: UInt8)
   case tooFewChars
   case tooManyChars
   
@@ -40,4 +40,33 @@ enum PuidError: Error {
         return "Exceed max of \(Puid.Chars.maxCount) characters"
     }
   }
+}
+
+public extension PuidError {
+  enum Code: Int {
+    case bytesExhausted
+    case bytesFailure
+    case charsNotUnique
+    case dataSize
+    case invalidChar
+    case invalidEncoder
+    case invalidEncoding
+    case tooFewChars
+    case tooManyChars
+  }
+  
+  var code: Code {
+    if case .bytesExhausted = self { return .bytesExhausted }
+    else if case .bytesFailure = self { return .bytesFailure }
+    else if case .charsNotUnique = self { return .charsNotUnique }
+    else if case .dataSize = self { return .dataSize }
+    else if case .invalidChar = self { return .invalidChar }
+    else if case .invalidEncoder = self { return .invalidEncoder }
+    else if case .invalidEncoding = self { return .invalidEncoding }
+    else { return .tooFewChars }
+  }
+}
+
+extension PuidError: LocalizedError {
+  public var errorDescription: String? { description }
 }
