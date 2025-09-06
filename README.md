@@ -151,6 +151,27 @@ try token.generate()
 // => "3AE2F836FB09E4D32850ABBA3A20A510B8F47D5CB8EA7CF6BFF10DE58F8FA7BD"
 ```
 
+#### Encode / Decode
+
+Convert between puid strings and representative bits.
+
+- encode(bits:): Accepts exactly the required number of bytes for this generator (ceil(ceil(bitsPerChar) * length / 8)). Throws on invalid size or if any sliced index exceeds the charset size.
+- decode(_:): Returns representative bytes for this generator. Supported for ASCII charsets only; throws for non-ASCII charsets or length mismatch.
+
+These functions facilitate storing a binary value of generated IDs while providing a means of recovering the puid String from that binary.  They DO NOT provide a a generic binary encoding like Base64. Only the leading ceil(bitsPerChar) bits per character are used. Any unused trailing bits in the last byte are ignored by encode and zeroed by decode. Therefore, bytes -> encode -> decode does not guarantee an exact byte-for-byte round trip. However, puid -> decode -> encode will round-trip the puid string exactly. 
+
+
+
+```swift
+import Puid
+
+let alphaId = try Puid(bits: 55, chars: .alphaLower)
+let puid = try alphaId.generate() // "arcdpmdppsmh"
+let bytes = try alphaId.decode(puid) // [0x04, 0x44, 0x37, 0xb0, 0x6f, 0x7c, 0x98, 0x70]
+let puid2 = try alphaId.encode(bits: bytes) // "rwfafkahbmgq"
+assert(puid2 == puid)
+```
+
 [TOC](#TOC)
 ### <a name="Chars"></a>Predefined Character Sets
 
@@ -259,23 +280,25 @@ print(alpha.ete)       // < 1.0 (non power-of-two charset)
 
 #### Risk helpers
 
-These helpers return the maximum total number of IDs that can be generated (for this Puid instance) before the probability of at least one repeat reaches the specified threshold.
+These helpers return the maximum total number of IDs before reaching a repeat threshold, and the 1‑in‑N risk for a given total.
 
 - total(atRiskProbability:): Accepts a probability p in (0, 1).
-- total(atRiskOneIn:): Accepts a one-in-X threshold X > 1.
+- total(atRiskOneIn:): Accepts a one‑in‑X threshold X > 1.
+- risk(after:): Returns a 1‑in‑N value (Double) for the chance of at least one repeat after generating the given total.
 
 ```swift
 import Puid
 
 let id = try Puid(bits: 128, chars: .safe64)
 
-// One-in-X form (e.g., one-in-a-trillion)
+// One‑in‑X form (e.g., one‑in‑a‑trillion)
 let maxAtOneIn = id.total(atRiskOneIn: 1e12)
 
-// Probability form (e.g., 1e-12)
+// Probability form (e.g., 1e‑12)
 let maxAtProbability = id.total(atRiskProbability: 1e-12)
 
-// Both values are Doubles representing the maximum total IDs before the given repeat risk is met.
+// Risk as 1‑in‑N for a given total
+let oneIn = id.risk(after: 1_000_000)
 ```
 
 [TOC](#TOC)
