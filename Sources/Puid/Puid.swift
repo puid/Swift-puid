@@ -48,7 +48,7 @@ public struct Puid {
               entropy: PuidEntropySource = Puid.Default.entropy) throws {
     try chars.validate()
     
-    settings = try Settings(bits: bits, chars: chars, entropy: entropy)
+    settings = Settings(bits: bits, chars: chars, entropy: entropy)
     puidBits = Puid.Bits(settings: settings)
     puidEncoder = try Puid.Encoder.encoder(for: settings.chars)
   }

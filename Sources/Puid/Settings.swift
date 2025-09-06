@@ -17,7 +17,7 @@ extension Puid {
     let length: Int
     let nBytesPerPuid: Int
     
-    init(bits: Double, chars: Puid.Chars, entropy: PuidEntropySource) throws {
+    init(bits: Double, chars: Puid.Chars, entropy: PuidEntropySource) {
       let (bits, bitsPerChar, nBytesPerPuid, ere, length) = Settings.puidInfo(for: chars,
                                                                               with: bits)
 
@@ -71,7 +71,7 @@ extension Puid.Settings {
   typealias PuidBpcAndLen = (bpc: Double, len: Int)
 
   static func puidInfo(for chars: Puid.Chars, with bits: Double) -> PuidInfo {
-    puidInfo(for: chars, using: try! puidBpcAndLen(chars, bits))
+    puidInfo(for: chars, using: puidBpcAndLen(chars, bits))
   }
   
   static func puidInfo(for chars: Puid.Chars, using bpcAndLen: PuidBpcAndLen) -> PuidInfo {
@@ -92,7 +92,7 @@ extension Puid.Settings {
     )
   }
   
-  static func puidBpcAndLen(_ chars: Puid.Chars, _ bits: Double) throws -> PuidBpcAndLen {
+  static func puidBpcAndLen(_ chars: Puid.Chars, _ bits: Double) -> PuidBpcAndLen {
     let bpc = chars.bitsPerChar
     let len = Int(round(ceil(bits / bpc)))
     return (bpc: bpc, len: len)
