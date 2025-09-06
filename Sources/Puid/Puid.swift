@@ -19,7 +19,7 @@ public struct Puid {
   let settings: Settings
   var puidBits: Puid.Bits
   var puidEncoder: PuidEncoderProtocol
-  
+
   /// Create a **PUID** generator using `bits`
   ///
   /// - Parameter bits: Entropy `bits` for generated IDs
@@ -43,16 +43,18 @@ public struct Puid {
   /// character, which depends on the count of ID characters used. **PUID** ensures the entropy
   /// bits is equal to the first multiple of bits per character greater than the specifed `bits`.
   ///
-  public init(bits: Double = Puid.Default.bits,
-              chars: Puid.Chars = Puid.Default.chars,
-              entropy: PuidEntropySource = Puid.Default.entropy) throws {
+  public init(
+    bits: Double = Puid.Default.bits,
+    chars: Puid.Chars = Puid.Default.chars,
+    entropy: PuidEntropySource = Puid.Default.entropy
+  ) throws {
     try chars.validate()
-    
+
     settings = Settings(bits: bits, chars: chars, entropy: entropy)
     puidBits = Puid.Bits(settings: settings)
     puidEncoder = try Puid.Encoder.encoder(for: settings.chars)
   }
-  
+
   /// Create a **PUID** generator using `bits`
   ///
   /// - Parameter bits: Entropy `bits` for generated IDs
@@ -81,14 +83,17 @@ public struct Puid {
   /// The `.prng` generator produces random bytes that are not cryptographically secure, but
   /// are suitable for circumstances where strict security characteristics are not required.
   ///
-  public init(bits: Double = Puid.Default.bits,
-              chars: Puid.Chars = Puid.Default.chars,
-              entropy source: Puid.Entropy.System) throws {
-    try self.init(bits: bits,
-                  chars: chars,
-                  entropy: Puid.Entropy.system(source))
+  public init(
+    bits: Double = Puid.Default.bits,
+    chars: Puid.Chars = Puid.Default.chars,
+    entropy source: Puid.Entropy.System
+  ) throws {
+    try self.init(
+      bits: bits,
+      chars: chars,
+      entropy: Puid.Entropy.system(source))
   }
-  
+
   /// Create a **PUID** generator using `total/risk`
   ///
   /// - Parameter total: The `total` number of **puid**s that can be generated at the specified `risk`
@@ -115,15 +120,18 @@ public struct Puid {
   /// with ID entropy sufficient to ensure a 1 in a billion chance of a repeat. In this case the
   /// entropy bits is  **51** and the IDs are 17 characters long, but that's a by-product of the
   /// explicit declaration of need, not the goal itself.
-  public init(total: Double,
-              risk: Double,
-              chars: Puid.Chars = Puid.Default.chars,
-              entropy: PuidEntropySource = Puid.Default.entropy) throws {
-    try self.init(bits: Puid.Entropy.bits(total: total, risk: risk),
-                  chars: chars,
-                  entropy: entropy)
+  public init(
+    total: Double,
+    risk: Double,
+    chars: Puid.Chars = Puid.Default.chars,
+    entropy: PuidEntropySource = Puid.Default.entropy
+  ) throws {
+    try self.init(
+      bits: Puid.Entropy.bits(total: total, risk: risk),
+      chars: chars,
+      entropy: entropy)
   }
-  
+
   /// Create a **PUID** generator
   ///
   /// - Parameter total: The `total` number of **puid**s that can be generated at the specified `risk`
@@ -150,16 +158,19 @@ public struct Puid {
   /// case the entropy bits is  **119** and the IDs are 20 characters long, but that's a
   /// by-product of the explicit declaration of need, not the goal itself.
   ///
-  public init(total: Double,
-              risk: Double,
-              chars: Puid.Chars = Puid.Default.chars,
-              entropy source: Puid.Entropy.System) throws {
-    try self.init(total: total,
-                  risk: risk,
-                  chars: chars,
-                  entropy: Puid.Entropy.system(source))
+  public init(
+    total: Double,
+    risk: Double,
+    chars: Puid.Chars = Puid.Default.chars,
+    entropy source: Puid.Entropy.System
+  ) throws {
+    try self.init(
+      total: total,
+      risk: risk,
+      chars: chars,
+      entropy: Puid.Entropy.system(source))
   }
-  
+
   /// Generate a **puid**
   ///
   /// - Throws: `Puid.Error` if the associated bytes generator is unable to provide sufficient source entropy
@@ -173,35 +184,35 @@ public struct Puid {
   }
 }
 
-public extension Puid {
+extension Puid {
   /// Bits of entropy for generated IDs
-  var bits: Double {
+  public var bits: Double {
     settings.bits
   }
 
   /// Bits of entropy per character used in IDs
-  var bitsPerChar: Double {
+  public var bitsPerChar: Double {
     settings.bitsPerChar
   }
 
   /// Characters used in IDs
-  var chars: String {
+  public var chars: String {
     settings.chars.string
   }
 
   /// Entropy Representation Efficiency
   ///
   /// The ratio of random ID entropy to the number of bits required to represent the string.
-  var ere: Double {
+  public var ere: Double {
     settings.ere
   }
-  
+
   /// Entropy Source
-  var source: String {
+  public var source: String {
     settings.entropy.source
   }
-  
-  var length: Int {
+
+  public var length: Int {
     settings.length
   }
 }
@@ -224,13 +235,13 @@ extension Puid {
     /// ID generation. The actual `bits` of entropy for generated **puid**s will be the next multiple greater than `bits`
     ///
     public static let bits = 128.0
-    
+
     /// The [RFC 4648](https://tools.ietf.org/html/rfc4648#section-5) file system and URL safe character set
     ///
     /// ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_
     ///
     public static let chars = Puid.Chars.safe64
-    
+
     /// Entropy source using system crytographically strong bytes
     public static let entropy = Puid.Entropy.system(.csprng)
   }

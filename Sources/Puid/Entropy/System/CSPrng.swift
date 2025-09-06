@@ -6,11 +6,11 @@
 import Foundation
 
 #if canImport(Darwin)
-import Darwin
-typealias EntropyStatus = OSStatus
+  import Darwin
+  typealias EntropyStatus = OSStatus
 #elseif canImport(Glibc)
-import Glibc
-typealias EntropyStatus = Int32
+  import Glibc
+  typealias EntropyStatus = Int32
 #endif
 
 extension Puid.Entropy.System {
@@ -25,27 +25,27 @@ extension Puid.Entropy.System {
     /// - Throws: `PuidError.dataSize` if Data size is insufficient to accept count bytes starting at offset
     func bytes(into data: inout Data, count: Int, offset: Int) throws {
       guard count + offset < data.count + 1 else { throw PuidError.dataSize }
-      
-#if canImport(Darwin)
-      let status = data.withUnsafeMutableBytes {
-        SecRandomCopyBytes(kSecRandomDefault, count, $0.baseAddress! + offset)
-      }
-      guard status == errSecSuccess else {
-        throw PuidError.bytesFailure(status: status)
-      }
-#elseif os(Linux)
-      (offset..<(offset+count)).forEach { ndx in
-        data[ndx] = UInt8.random(in: UInt8.min ... UInt8.max)
-      }
-#endif
+
+      #if canImport(Darwin)
+        let status = data.withUnsafeMutableBytes {
+          SecRandomCopyBytes(kSecRandomDefault, count, $0.baseAddress! + offset)
+        }
+        guard status == errSecSuccess else {
+          throw PuidError.bytesFailure(status: status)
+        }
+      #elseif os(Linux)
+        (offset..<(offset + count)).forEach { ndx in
+          data[ndx] = UInt8.random(in: UInt8.min...UInt8.max)
+        }
+      #endif
     }
-    
+
     var source: String {
-#if canImport(Darwin)
-      "SecRandomCopyBytes"
-#elseif os(Linux)
-      "UInt8.random"
-#endif
+      #if canImport(Darwin)
+        "SecRandomCopyBytes"
+      #elseif os(Linux)
+        "UInt8.random"
+      #endif
     }
   }
 }

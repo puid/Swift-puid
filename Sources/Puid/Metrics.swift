@@ -48,15 +48,16 @@ extension Puid.Chars {
   }
 }
 
-public extension Puid.Chars {
-  struct BitShift: Sendable {
+extension Puid.Chars {
+  public struct BitShift: Sendable {
     public let value: Int
     public let shift: Int
   }
 }
 
-private extension Puid.Chars {
-  static func bitsConsumedOnReject(charsetSize: Int, totalValues: Int, bitShifts: [Puid.Bits.Shift]) -> Int {
+extension Puid.Chars {
+  fileprivate static func bitsConsumedOnReject(charsetSize: Int, totalValues: Int, bitShifts: [Puid.Bits.Shift]) -> Int
+  {
     if charsetSize >= totalValues { return 0 }
 
     var sum = 0
@@ -69,7 +70,7 @@ private extension Puid.Chars {
     return sum
   }
 
-  static func findBitShift(value: Int, bitShifts: [Puid.Bits.Shift]) -> Int {
+  fileprivate static func findBitShift(value: Int, bitShifts: [Puid.Bits.Shift]) -> Int {
     var i = 0
     while i < bitShifts.count {
       let rule = bitShifts[i]
@@ -79,4 +80,3 @@ private extension Puid.Chars {
     fatalError("bitShifts \(bitShifts) has no matching bit shift rule for value \(value)")
   }
 }
-

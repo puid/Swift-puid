@@ -22,6 +22,20 @@ swift: [ '5.9', '5.10' ]
         with:
           submodules: recursive
 
+      - name: SwiftLint (macOS)
+        if: runner.os == 'macOS'
+        uses: norio-nomura/action-swiftlint@v3.6.1
+        with:
+          args: --strict
+
+      - name: Install swift-format (macOS)
+        if: runner.os == 'macOS'
+        run: brew install swift-format
+
+      - name: swift-format lint (macOS)
+        if: runner.os == 'macOS'
+        run: swift-format --configuration .swift-format --mode lint --recursive Sources Tests
+
       - name: Setup Swift (Linux)
         if: runner.os == 'Linux'
         uses: swift-actions/setup-swift@v2

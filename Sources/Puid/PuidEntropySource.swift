@@ -15,7 +15,7 @@ import Foundation
   ///
   /// - Throws: `PuidError.dataSize` if `Data` capacity is insufficient
   func bytes(into: inout Data, count: Int, offset: Int) throws
-  
+
   /// Description of the source of entropy bytes
   var source: String { get }
 }

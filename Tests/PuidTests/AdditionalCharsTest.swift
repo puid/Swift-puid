@@ -5,14 +5,16 @@
 //
 
 import XCTest
+
 @testable import Puid
 
 final class AdditionalCharsTest: XCTestCase {
   private func isAsciiSubset(_ chars: Puid.Chars, of set: CharacterSet) -> Bool {
     let isSubset = CharacterSet(charactersIn: chars.string).isSubset(of: set)
-    return isSubset && chars.string.reduce(true) { valid, char in
-      return valid && char.isASCII
-    }
+    return isSubset
+      && chars.string.reduce(true) { valid, char in
+        return valid && char.isASCII
+      }
   }
 
   func testNewCounts() {
@@ -58,4 +60,3 @@ final class AdditionalCharsTest: XCTestCase {
     XCTAssert(isAsciiSubset(.zBase32, of: .lowercaseLetters.union(.decimalDigits)))
   }
 }
-

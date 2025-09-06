@@ -1,0 +1,37 @@
+included:
+  - Sources
+  - Tests
+
+# Style preferences tuned for this project
+line_length:
+  warning: 120
+  error: 160
+  ignores_comments: true
+  ignores_function_declarations: false
+  ignores_urls: true
+
+# Keep lints actionable; avoid over-linting for this library
+disabled_rules:
+  - trailing_whitespace
+  - large_tuple
+  - function_body_length
+  - type_body_length
+  - file_length
+  - cyclomatic_complexity
+
+opt_in_rules:
+  - empty_count
+  - redundant_nil_coalescing
+  - redundant_type_annotation
+  - fatal_error_message
+  - switch_case_on_newline
+  - unused_import
+
+# Encourage switch for long condition ladders
+custom_rules:
+  prefer_switch_over_long_if_else:
+    name: "Prefer switch over long if/else"
+    regex: "if[\s\S]*else if[\s\S]*else if"
+    message: "Consider 'switch' instead of long if/else chains."
+    severity: warning
+

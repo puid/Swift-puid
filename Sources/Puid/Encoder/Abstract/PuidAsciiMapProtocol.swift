@@ -1,6 +1,6 @@
 //
 //  PuidAsciiMapProtocol
-//  
+//
 //  MIT License: See project LICENSE.txt
 //
 

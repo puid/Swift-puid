@@ -5,6 +5,7 @@
 //
 
 import XCTest
+
 @testable import Puid
 
 final class EncoderAdditionalTest: XCTestCase {
@@ -46,4 +47,3 @@ final class EncoderAdditionalTest: XCTestCase {
     XCTAssertEqual(s, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~")
   }
 }
-

@@ -15,7 +15,7 @@ extension Puid.Encoder {
     func map(_ code: PuidNdx) throws -> Utf8Code {
       throw PuidError.invalidEncoder
     }
-    
+
     func encode(_ ndxs: PuidNdxs) throws -> String {
       let utf8Codes = try ndxs.map { try UnicodeScalar(map($0))! }
       return utf8Codes.string

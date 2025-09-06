@@ -5,6 +5,7 @@
 //
 
 import XCTest
+
 @testable import Puid
 
 final class MetricsTest: XCTestCase {
@@ -34,4 +35,3 @@ final class MetricsTest: XCTestCase {
     XCTAssertEqual(m.ete, 0.8421104129072068, accuracy: 1e-12)
   }
 }
-

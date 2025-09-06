@@ -1,6 +1,6 @@
 //
 //  Puid.AsciiCode
-//  
+//
 //  MIT License: See project LICENSE.txt
 //
 
@@ -40,10 +40,9 @@ extension Puid {
     case t = 116
     case openCurlyBracket = 123
     case tilde = 126
-    
+
     var code: AsciiCode {
       self.rawValue
     }
   }
 }
-
