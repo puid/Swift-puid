@@ -11,7 +11,7 @@ import XCTest
 final class MetricsTest: XCTestCase {
   func round(_ x: Double, places: Int) -> Double {
     let p = pow(10.0, Double(places))
-    return Darwin.round(x * p) / p
+    return (x * p).rounded() / p
   }
 
   func testSafe64Metrics() {

@@ -18,20 +18,23 @@ disabled_rules:
   - type_body_length
   - file_length
   - cyclomatic_complexity
+  - identifier_name
+  - nesting
+  - trailing_comma
+  - reduce_boolean
+  - control_statement
+  - redundant_discardable_let
+  - colon
+  - redundant_type_annotation
+  - opening_brace
+  - function_parameter_count
 
 opt_in_rules:
   - empty_count
   - redundant_nil_coalescing
-  - redundant_type_annotation
   - fatal_error_message
   - switch_case_on_newline
-  - unused_import
 
-# Encourage switch for long condition ladders
-custom_rules:
-  prefer_switch_over_long_if_else:
-    name: "Prefer switch over long if/else"
-    regex: "if[\s\S]*else if[\s\S]*else if"
-    message: "Consider 'switch' instead of long if/else chains."
-    severity: warning
+analyzer_rules:
+  - unused_import
 

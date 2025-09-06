@@ -343,7 +343,11 @@ final class PuidTests: XCTestCase {
     XCTAssertEqual(round2(puid.bits), 98.23)
     XCTAssertEqual(round2(puid.bitsPerChar), 5.17)
     XCTAssertEqual(puid.chars, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+    #if os(Linux)
+    XCTAssertEqual(puid.source, "SystemRandomNumberGenerator")
+    #else
     XCTAssertEqual(puid.source, "SecRandomCopyBytes")
+    #endif
     XCTAssertEqual(round2(puid.ere), 0.65)
     XCTAssertEqual(puid.length, 19)
   }

@@ -22,10 +22,6 @@ let package = Package(
       swiftSettings: [
         .enableUpcomingFeature("StrictConcurrency")
       ]),
-    .executableTarget(
-      name: "Scratch",
-      dependencies: ["Puid"]
-    ),
     .testTarget(
       name: "PuidTests",
       dependencies: ["Puid"]),
