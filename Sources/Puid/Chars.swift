@@ -48,6 +48,11 @@ extension Puid {
     ///
     /// Entropy bits per character: `5.17`
     case alphaNumUpper
+
+    /// [RFC 4648](https://www.rfc-editor.org/rfc/rfc4648#section-8) base16 character set (uppercase)
+    ///
+    /// 0123456789ABCDEF
+    case base16
     
     /// [RFC 4648](https://tools.ietf.org/html/rfc4648#section-6) base32 character set
     ///
@@ -69,6 +74,24 @@ extension Puid {
     ///
     /// Entropy bits per character: `5`
     case base32HexUpper
+
+    /// Case-insensitive alphanumeric (lowercase)
+    ///
+    /// 0123456789abcdefghijklmnopqrstuvwxyz
+    case base36
+
+    /// Case-insensitive alphanumeric (uppercase)
+    ///
+    /// 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ
+    case base36Upper
+
+    /// Bitcoin Base58 alphabet (no 0, O, I, l)
+    ///
+    /// 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz
+    case base58
+
+    /// Alphanumeric characters (alias for alphaNum)
+    case base62
     
     /// [Crockford 32](https://www.crockford.com/base32.html)
     ///
@@ -83,6 +106,26 @@ extension Puid {
     ///
     /// Entropy bits per character: `3.32`
     case decimal
+
+    /// Bitcoin SegWit address encoding (no 1, b, i, o)
+    ///
+    /// 023456789acdefghjklmnpqrstuvwxyz
+    case bech32
+
+    /// Boolean/binary representation
+    ///
+    /// TF
+    case boolean
+
+    /// DNA nucleotide bases
+    ///
+    /// ACGT
+    case dna
+
+    /// Geohash encoding alphabet (base32 variant excluding 'a', 'i', 'l', 'o')
+    ///
+    /// 0123456789bcdefghjkmnpqrstuvwxyz
+    case geohash
     
     /// Hex lower case
     ///
@@ -122,6 +165,11 @@ extension Puid {
     ///
     /// Entropy bits per character: `6`
     case safe64
+
+    /// RFC 3986 unreserved characters
+    ///
+    /// ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~
+    case urlSafe
     
     /// Symbols comprised of `safeAscii` characters not in `alphanum`
     ///
@@ -129,6 +177,16 @@ extension Puid {
     ///
     /// Entropy bits per character: `4.81`
     case symbol
+
+    /// Strings that don't look like English words
+    ///
+    /// 23456789CFGHJMPQRVWXcfghjmpqrvwx
+    case wordSafe32
+
+    /// Zooko's human-oriented base32 (easier to read/transcribe)
+    ///
+    /// ybndrfg8ejkmcpqxot1uwisza345h769
+    case zBase32
 
     /// Custom chars
     case custom(_ chars: String)
@@ -182,16 +240,34 @@ extension Puid.Chars {
         return Puid.Chars.AlphaNumLower
       case .alphaNumUpper:
         return Puid.Chars.AlphaNumUpper
+      case .base16:
+        return Puid.Chars.Base16
       case .base32:
         return Puid.Chars.Base32
       case .base32Hex:
         return Puid.Chars.Base32Hex
       case .base32HexUpper:
         return Puid.Chars.Base32HexUpper
+      case .base36:
+        return Puid.Chars.Base36
+      case .base36Upper:
+        return Puid.Chars.Base36Upper
+      case .base58:
+        return Puid.Chars.Base58
+      case .base62:
+        return Puid.Chars.AlphaNum
       case .crockford32:
         return Puid.Chars.Crockford32
       case .decimal:
         return Puid.Chars.DecimalDigits
+      case .bech32:
+        return Puid.Chars.Bech32
+      case .boolean:
+        return Puid.Chars.Boolean
+      case .dna:
+        return Puid.Chars.DNA
+      case .geohash:
+        return Puid.Chars.Geohash
       case .hex:
         return Puid.Chars.Hex
       case .hexUpper:
@@ -202,8 +278,14 @@ extension Puid.Chars {
         return Puid.Chars.Safe32
       case .safe64:
         return Puid.Chars.Safe64
+      case .urlSafe:
+        return Puid.Chars.UrlSafe
       case .symbol:
         return Puid.Chars.Symbol
+      case .wordSafe32:
+        return Puid.Chars.WordSafe32
+      case .zBase32:
+        return Puid.Chars.ZBase32
       case .custom(let chars):
         return chars
     }
@@ -232,17 +314,29 @@ extension Puid.Chars: CaseIterable {
     .alphaNum,
     .alphaNumLower,
     .alphaNumUpper,
+    .base16,
     .base32,
     .base32Hex,
     .base32HexUpper,
+    .base36,
+    .base36Upper,
+    .base58,
+    .base62,
     .crockford32,
     .decimal,
+    .bech32,
+    .boolean,
+    .dna,
+    .geohash,
     .hex,
     .hexUpper,
     .safeAscii,
     .safe32,
     .safe64,
-    .symbol]
+    .urlSafe,
+    .symbol,
+    .wordSafe32,
+    .zBase32]
 }
 
 extension Puid.Chars {
@@ -256,9 +350,21 @@ extension Puid.Chars {
   static let AlphaNumLower = AlphaLower + DecimalDigits
   static let AlphaNumUpper = AlphaUpper + DecimalDigits
   
+  static let Base16 = (DecimalDigits + "ABCDEF")
+  
   static let Base32 = AlphaUpper + "234567"
   static let Base32Hex = DecimalDigits + "abcdefghijklmnopqrstuv"
   static let Base32HexUpper = Base32Hex.uppercased()
+  
+  static let Base36 = DecimalDigits + AlphaLower
+  static let Base36Upper = DecimalDigits + AlphaUpper
+  
+  static let Base58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
+  
+  static let Bech32 = "023456789acdefghjklmnpqrstuvwxyz"
+  static let Boolean = "TF"
+  static let DNA = "ACGT"
+  static let Geohash = "0123456789bcdefghjkmnpqrstuvwxyz"
   
   static let Crockford32 = (DecimalDigits + AlphaUpper).filter { c in
     !"OLIU".contains(c)
@@ -272,8 +378,13 @@ extension Puid.Chars {
   static let Safe32 = "2346789bdfghjmnpqrtBDFGHJLMNPQRT"
   
   static let Safe64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
+
+  static let UrlSafe = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~"
   
   static let Symbol = "!#$%&()*+,-./:;<=>?@[]^_{|}~"
+  
+  static let WordSafe32 = "23456789CFGHJMPQRVWXcfghjmpqrvwx"
+  static let ZBase32 = "ybndrfg8ejkmcpqxot1uwisza345h769"
 }
 
 extension Puid.Chars {

@@ -107,7 +107,7 @@ try prngId.generate()
 
 ### <a name="Characters"></a>Characters
 
-The characters used in ID generation are designated using the `chars` option. `Puid` provides 17 predefined characters sets, as well as an option to specify any set of unique characters:
+The characters used in ID generation are designated using the `chars` option. `Puid` provides a large set of predefined characters, as well as an option to specify any set of unique characters:
 
 ```swift
 let alphaNumId = try Puid(chars: .alphaNum)
@@ -144,32 +144,62 @@ try token.generate()
 ```
 
 [TOC](#TOC)
-
 ### <a name="Chars"></a>Predefined Characters
 
-The `Puid.Chars` **enum** includes 17 predefined character sets:
+The `Puid.Chars` enum includes predefined character sets:
 
-| Name                | Characters                                                                                    |
-| :------------------ | :-------------------------------------------------------------------------------------------- |
-| .alpha              | ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz                                          |
-| .alphaLower         | abcdefghijklmnopqrstuvwxyz                                                                    |
-| .alphaUpper         | ABCDEFGHIJKLMNOPQRSTUVWXYZ                                                                    |
-| .alphaNum           | ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789                                |
-| .alphaNumLower      | abcdefghijklmnopqrstuvwxyz0123456789                                                          |
-| .alphaNumUpper      | ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789                                                          |
-| .base32             | ABCDEFGHIJKLMNOPQRSTUVWXYZ234567                                                              |
-| .base32Hex          | 0123456789abcdefghijklmnopqrstuv                                                              |
-| .base32HexUpper     | 0123456789ABCDEFGHIJKLMNOPQRSTUV                                                              |
-| .crockford32        | 0123456789ABCDEFGHJKMNPQRSTVWXYZ                                                              |
-| .decimal            | 0123456789                                                                                    |
-| .hex                | 0123456789abcdef                                                                              |
-| .hexUpper           | 0123456789ABCDEF                                                                              |
-| .safeSscii          | !#$%&()\*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^\_abcdefghijklmnopqrstuvwxyz{\|}~ |
-| .safe32             | 2346789bdfghjmnpqrtBDFGHJLMNPQRT                                                              |
-| .safe64             | ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-\_                             |
+| Name             | Characters                                                                                     |
+| :--------------- | :--------------------------------------------------------------------------------------------- |
+| .alpha           | ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz                                           |
+| .alphaLower      | abcdefghijklmnopqrstuvwxyz                                                                     |
+| .alphaUpper      | ABCDEFGHIJKLMNOPQRSTUVWXYZ                                                                     |
+| .alphaNum        | ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789                                 |
+| .alphaNumLower   | abcdefghijklmnopqrstuvwxyz0123456789                                                           |
+| .alphaNumUpper   | ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789                                                           |
+| .base16          | 0123456789ABCDEF                                                                               |
+| .base32          | ABCDEFGHIJKLMNOPQRSTUVWXYZ234567                                                               |
+| .base32Hex       | 0123456789abcdefghijklmnopqrstuv                                                               |
+| .base32HexUpper  | 0123456789ABCDEFGHIJKLMNOPQRSTUV                                                               |
+| .base36          | 0123456789abcdefghijklmnopqrstuvwxyz                                                           |
+| .base36Upper     | 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ                                                           |
+| .base58          | 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz                                      |
+| .base62          | ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789                                 |
+| .bech32          | 023456789acdefghjklmnpqrstuvwxyz                                                               |
+| .boolean         | TF                                                                                              |
+| .crockford32     | 0123456789ABCDEFGHJKMNPQRSTVWXYZ                                                               |
+| .decimal         | 0123456789                                                                                     |
+| .dna             | ACGT                                                                                           |
+| .geohash         | 0123456789bcdefghjkmnpqrstuvwxyz                                                               |
+| .hex             | 0123456789abcdef                                                                               |
+| .hexUpper        | 0123456789ABCDEF                                                                               |
+| .safeAscii       | !#$%&()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{|}~      |
+| .safe32          | 2346789bdfghjmnpqrtBDFGHJLMNPQRT                                                               |
+| .safe64          | ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-\_                              |
+| .symbol          | !#$%&()*+,-./:;<=>?@[]^_{|}~                                                                   |
+| .urlSafe         | ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~                              |
+| .wordSafe32      | 23456789CFGHJMPQRVWXcfghjmpqrvwx                                                               |
+| .zBase32         | ybndrfg8ejkmcpqxot1uwisza345h769                                                               |
 | .symbol             | !#$%&()\*+,-./:;<=>?@[]^\_{\|}~                                                               |
 
 `Puid.Chars.custom(String)` provides a mechanism to use any **String** of up to 256 unique characters for ID generation.
+
+[TOC](#TOC)
+
+### Metrics
+
+Puid exposes character set metrics analogous to Puid.Chars.metrics/1 in the Elixir library. Use Puid.Chars.metrics(_:) to inspect bit slicing characteristics and efficiency values for any predefined or custom charset.
+
+Example:
+
+```swift
+import Puid
+
+let m = Puid.Chars.metrics(.safe64)
+print(m.avgBits)    // 6.0
+print(m.bitShifts)  // [(value: 63, shift: 6)]
+print(m.ere)        // 0.75
+print(m.ete)        // 1.0
+```
 
 [TOC](#TOC)
 
